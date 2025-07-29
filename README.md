@@ -10,6 +10,18 @@ basic but powerful DIY Meshtastic node with the following features:
 - Based on 2 easy to obtain COTS modules
 - Relatively easy assembly and soldering with no custom PCB required
 
+## Target audience
+
+These instructions assume you have basic electronics soldering
+equipment, supplies and tools, and are reasonably competent at
+soldering surface mount and thru-hole PCBs.  If you have no experience
+soldering, don't give up; you can probably learn to solder in a day or
+two.  There are plenty of tutorial videos out there.  But, don't do
+your early practice on this project.
+
+Similarily, it's best if you are familiar with other Meshtastic nodes
+as this is not an introduction to Meshtastic.
+
 ## Parts list:
 
 Note: Product links are examples and do not imply strong recommendation.
@@ -135,10 +147,11 @@ surface of the pads on the other edge.  You might want to cover the
 entire GND pad next to DI01 on the E22 to avoid any chance of shorts
 when the resistors are later installed.
 
-<img src="images/tape_nrf.jpg width="720px">
-<img src="images/trim_tape.jpg width="720px">
+<img src="images/tape_nrf.jpg" width="720px">
+<img src="images/trim_tape.jpg" width="720px">
+<img src="images/tape_e22.jpg" width="720px">
 
-### 4. Align and clamp boards
+### 4. Align and very gently clamp boards
 
 After applying and trimming the heat resistant tape, position the
 boards back to back such that the 7 pads at the antenna end,
@@ -148,13 +161,15 @@ the pads on each board are directly oposite the corresponding pads on
 the other board.  To allow the possibility of separating the boards
 later, the NRF board should overhanging the E22 enough that you can
 see the entirety of each pad on the bottom of the NRF board.  Hold,
-clamp, temporarily tape, or glue the boards in this position.
+very gently clamp, temporarily tape, or glue the boards in this position.
 
 If you position the boards carefully, with ~.1mm gap between the inner
 edges of the pads on the NRF and the outer edge of the E22, you can
 make the connections with solder bridges and still easily unsolder to
 separate the boards later in case you brick it and need to access the
 programming pads on the bottom.
+
+<img src="images/clamp_boards.jpg" width="720px">
 
 ### 5. Solder first edge connections
 
@@ -164,6 +179,8 @@ corresponding castellated E22 pad.  Before proceeding to solder the 5
 remaining connections on this edge of the boards, check that the
 spacing is correct and that each connection is correct as in the table
 and #defines below.
+
+<img src="images/solder_edge1.jpg" width="720px">
 
 ### 6. Install voltage divider resistors
 
@@ -175,10 +192,16 @@ but VBAT_DIVIDER_COMP will need to be adjusted slightly to account for
 the effect of the input current drain.
 
 
+<img src="images/resistor_prep.jpg" width="720px">
+<img src="images/installed_resistors.jpg" width="720px">
+
 ### 7. Optional capacitor
 
 To reduce power supply noise, you can also solder a ceramic SMD
 capacitor between the VCC and GND pads on the E22.
+
+<img src="images/tin_pads.jpg" width="720px">
+<img src="images/solder_capacitor.jpg" width="720px">
 
 ### 8. Solder second edge connections
 
@@ -190,6 +213,8 @@ permanently affix the boards with glue.  The rigid pins help hold the
 boards together and reduce the chance of breaking solder connections
 on the first edge.
 
+<img src="images/solder_edge2.jpg" width="720px">
+
 ### 9. Solder power wire
 
 Lastly, we need to power the E22; Solder a short length of insulated wire from
@@ -199,6 +224,8 @@ Warning: Never power up the E22 without an antenna or 50 ohm load
 connected or it may be damaged.  And never set SX126X_MAX_POWER define
 to more than 8 when building firmware for the E22 900M33S or it will
 be damaged.
+
+<img src="images/.jpg" width="720px">
 
 ### 10. Check work
 
@@ -215,10 +242,14 @@ connects to the SMA jack to allow room for the switch.
 Carefully connect the pigtail U.FL to the E22 and be careful not to
 pull or twist it off durring the remainder of the assembly.
 
+<img src="images/.jpg" width="720px">
+
 ### 12. Connect Antenna
 
 Never power up the E22 without an antenna or 50 ohm load
 connected or it may be damaged.
+
+<img src="images/.jpg" width="720px">
 
 ### 13. Connect switch and battery
 
@@ -249,6 +280,8 @@ Connect the farthest switch terminal to the +5 LDO terminal.
 Double check that the antenna and U.FL are still connected and then solder the
 negative (black) lead of the battery or jack wire to a GND pad.
 
+<img src="images/.jpg" width="720px">
+
 ### 14. Install switch
 
 Tighten the switch nut snugly while preventing the switch from
@@ -258,10 +291,14 @@ The off position of the switch is towards the case and the on position
 is towards the SMA jack.  Note however, that the node will also be
 powered on when the switch is off and the USB is connected.
 
+<img src="images/.jpg" width="720px">
+
 ### 15. Install battery
 
 If you used a connector for the battery, Double check that the antenna
 and U.FL are still connected and connect and install the battery.
+
+<img src="images/.jpg" width="720px">
 
 ### 16. Assemble case
 
@@ -276,10 +313,12 @@ may want to use some heat resistant tape to keep the longer wires in
 place at the side of the case away from the protruding parts of the
 lid.
 
+<img src="images/.jpg" width="720px">
+
 ## Usage notes:
 
 If built as described here, this node can be powered by either USB or
-a 1 S Lithium battery.
+an internal 1 S Lithium battery.
 
 When the batteryswitch is on (towards the SMA jack), the battery is
 connected to both the battery terminal of the NRF board and VCC of the
