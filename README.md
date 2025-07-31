@@ -17,8 +17,8 @@ basic but powerful DIY Meshtastic node with the following features:
 These instructions assume you have basic electronics soldering
 equipment, supplies and tools, and are reasonably competent at
 soldering surface mount and thru-hole PCBs.  If you have no experience
-soldering, don't give up; you can probably learn to solder in a day or
-two.  There are plenty of tutorial videos out there.  But, don't do
+soldering, don't give up; you can probably learn to solder in few
+hours.  There are plenty of tutorial videos out there.  But, don't do
 your early practice on this project.
 
 Similarly, it's best if you are familiar with other Meshtastic nodes
