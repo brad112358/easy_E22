@@ -42,9 +42,12 @@ Note: Product links are examples and do not imply strong recommendation.
     The 50mm x 20mm x 10mm cells from
     [Amazon](https://www.amazon.com/dp/B0F1FM58ZW) or [AliExpress](https://www.aliexpress.us/item/3256802548578153.html) fit this case design.
 
-    Smaller cells can still provide useful battery life, but be sure they
-    are capable of over 1 amp output.  Larger cells will require a
-    larger case.  You may also want a matching JST PH 2.0 [socket](https://www.aliexpress.us/item/3256802377876396.html).
+    Smaller cells can still provide useful battery life, but be sure
+    they are capable of over 1 amp output without significant voltage
+    drop.  Higher C cells will produce slightly higher RF output.
+    Larger cells will require a larger case.  You may also want a
+    matching JST PH 2.0
+    [socket](https://www.aliexpress.us/item/3256802377876396.html).
 
 - Mini micro 3 pin SPDT toggle switch
 
@@ -68,9 +71,15 @@ Note: Product links are examples and do not imply strong recommendation.
     
 - Wire
 
-    24-28 AWG stranded Silicone wire is recommended.
+    22-24 AWG stranded Silicone wire is recommended to reduce voltage
+    drop and keep RF power output up to spec.
 
-- 2 1/8 Watt 1M ohm resistors with leads
+- 2 resistors with leads; 1/4 - 1/8 Watt 10K Ohm 1% recommended
+
+    1/4 Watt is easier to fit.  1K-1M Ohm 5 and up to 10% resistors
+    will also work, but both must be the same value and you may need
+    to adjust the ADC multiplier override ratio for accurate battery
+    voltage readings.
 
 - Common 2.54 mm pin header
 
@@ -131,15 +140,16 @@ This also ensures that the TXEN pad is not driven when it shouldn't be
 which could damage the E22.
 
 Follow the Meshtastic instructions to upgrade to the
-[Adafruit bootloader](https://github.com/adafruit/Adafruit_nRF52_Bootloader?tab=readme-ov-file#adafruit-nrf52-bootloader) using
+[Adafruit bootloader](https://github.com/adafruit/Adafruit_nRF52_Bootloader) using
 [Method 1: UFL](https://meshtastic.org/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#method-1-using-the-uf2-file-recommended).
 Download and install the
 [latest version](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/latest)
-of the [nice nano .uf2 file](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/download/0.9.2/update-nice_nano_bootloader-0.9.2_nosd.uf2).
-Note that since there is no reset button, you need to carefully and briefly
-short the RST and GND pads twice in 1/2 second to activate bootloader
-mode.  Be sure you short only the correct pins, 3rd and 4th from the end.  A
-small tweezers works well.  It may take a few tries; look for the slow "breathing" red LED.
+of the nice update-nano .uf2 file.  Note that since there is no reset
+button, you need to carefully and briefly short the RST and GND pads
+twice in 1/2 second to activate bootloader mode.  Be sure you short
+only the correct pins, 3rd and 4th from the end.  A small tweezers
+works well.  It may take a few tries; look for the slow "breathing"
+red LED.
 
 Once the bootloader is installed, you can use the same method to
 install the Meshtastic firmware.  Note, this node is not yet supported
@@ -203,15 +213,13 @@ and #defines below.
 
 ### 7. Install voltage divider resistors
 
-For battery powered builds, you will also want a voltage divider to
-sense the battery voltage.  Solder a 1/8 Watt 1M Ohm resistor between
-P0.31 and B+ or RAW and an identical resistor between P0.31 and GND on
-either side of the board.  Somewhat smaller or larger resistor values will work,
-but VBAT_DIVIDER_COMP will need to be adjusted slightly to account for
-the effect of the input current drain.
-
+For battery powered builds, you will want a voltage divider to sense
+the battery voltage.  Solder a resistor between P0.31 and B+ or RAW
+and an identical resistor between P0.31 and GND on either side of the
+board.
 
 <img src="images/resistor_prep.jpg" width="720px">
+<img src="images/resistors.jpg" width="720px">
 
 ### 8. Optional capacitor
 
@@ -373,7 +381,7 @@ you shorted the square pads as suggested.
 When the battery switch is off (towards the case), the battery is
 completely disconnected and the USB voltage is connected to the b+ pad
 and VCC of the E22.  This means that the battery will not charge with
-the switch off and that the node will operate from USB power alone.
+the switch off and that the node will operate only from USB power.
 
 It is worth repeating here that the antenna MUST be connected anytime
 the USB is connected or the switch is on, including when charging to
@@ -404,7 +412,7 @@ service life, it is recommended to monitor the battery voltage and
 turn off or charge your node before the battery is exhausted.
 
 When charging, the blue LED will remain lit until the battery is
-almost fully charged, then it will cycle on and off until fully
+about 80% charged. Then it will cycle on and off at various intervals until fully
 charged.
 
 <img src="images/charging.jpg" width="720px">
