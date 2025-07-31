@@ -85,7 +85,7 @@ module top() {
             bottom(extra=1);
 
             // chopp off bottom
-            translate([0,0,-top-ledge-.2]) cube([(box_x+thick+diameter+ant_x)*2,box_y+thick+diameter+1,box_z],center = true);
+            #translate([0,0,-top-ledge-.2]) cube([(box_x+thick+diameter+ant_x)*2,box_y+thick+diameter+1,box_z],center = true);
 
             // hollow inside
             union() {

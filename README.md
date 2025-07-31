@@ -24,6 +24,8 @@ your early practice on this project.
 Similarly, it's best if you are familiar with other Meshtastic nodes
 as this is not an introduction to Meshtastic.
 
+<img src="images/parts.jpg" width="720px">
+
 ## Parts list:
 
 Note: Product links are examples and do not imply strong recommendation.
@@ -88,8 +90,6 @@ Note: Product links are examples and do not imply strong recommendation.
 - Heat resistant tape
 
     Every workbench should have a roll of this [stuff](https://www.amazon.com/ELEGOO-Polyimide-Temperature-Resistant-Multi-Sized/dp/B072Z92QZ2).
-
-<img src="images/parts.jpg" width="720px">
 
 ## E22/NRF52 PRO MICRO PIN ASSIGNMENT
 
