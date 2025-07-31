@@ -10,6 +10,8 @@ basic but powerful DIY Meshtastic node with the following features:
 - Based on 2 easy to obtain COTS modules
 - Relatively easy assembly and soldering with no custom PCB required
 
+<img src="images/easy_pocket_node.jpg" width="1000px">
+
 ## Target audience
 
 These instructions assume you have basic electronics soldering
@@ -375,12 +377,13 @@ the switch off and that the node will operate from USB power alone.
 
 It is worth repeating here that the antenna MUST be connected anytime
 the USB is connected or the switch is on, including when charging to
-avoid damaging the E22 module.  The 3D design files include an
-optional safety device which, when screwed onto the SMA jack, will
-prevent the battery switch from accidentally being turned on. Use this
-in case you wish to carry the node with the antenna detached.  If you
-really must charge the battery without an antenna connected, connect
-a 50 Ohm load.
+avoid damaging the E22 module.  When the antenna is installed, it
+helps protect the switch from being inadvertently changed.  The 3D
+design files include an optional safety device which, when screwed
+onto the SMA jack, will prevent the battery switch from accidentally
+being turned on. Use this in case you wish to carry the node with the
+antenna detached.  If you really must charge the battery without an
+antenna connected, connect a 50 Ohm load.
 
 <img src="images/switch_lock.jpg" width="720px">
 
