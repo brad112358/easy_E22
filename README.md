@@ -19,7 +19,7 @@ soldering, don't give up; you can probably learn to solder in a day or
 two.  There are plenty of tutorial videos out there.  But, don't do
 your early practice on this project.
 
-Similarily, it's best if you are familiar with other Meshtastic nodes
+Similarly, it's best if you are familiar with other Meshtastic nodes
 as this is not an introduction to Meshtastic.
 
 ## Parts list:
@@ -106,7 +106,7 @@ Note: Product links are examples and do not imply strong recommendation.
 This node is constructed primarily by temporarily gluing, taping or
 gently clamping (use a small vise with rubber bumpers), and then
 soldering, the NRF development board directly to an EBYTE E22 900m30S.
-Construction time may be 1-2 hours.
+Construction time may be 2-4 hours.
 
 Strip and tin each wire before soldering in place.
 
@@ -137,7 +137,7 @@ of the [nice nano .uf2 file](https://github.com/adafruit/Adafruit_nRF52_Bootload
 Note that since there is no reset button, you need to carefully and briefly
 short the RST and GND pads twice in 1/2 second to activate bootloader
 mode.  Be sure you short only the correct pins, 3rd and 4th from the end.  A
-small tweezers works well.  It may take a few trys; look for the slow "breathing" red LED.
+small tweezers works well.  It may take a few tries; look for the slow "breathing" red LED.
 
 Once the bootloader is installed, you can use the same method to
 install the Meshtastic firmware.  Note, this node is not yet supported
@@ -150,8 +150,10 @@ in the Meshtastic firmware source, so I have provided a development
 If you will connect a battery larger than about 500 mAh, you probably
 want to short the two square "BOOST" pads on the back of the board
 near the RST and VCC pads to reduce charge time; Solder stripped
-wire-wrap wire, or separate a couple of wire strands, or just bridge
-the pads with solder, keeping it as thin as you can.
+wire-wrap wire, or separate a couple of coarse wire strands, or just
+bridge the pads with solder, keeping it as thin as you can.
+
+<img src="images/charge_jumper.jpg" width="720px">
 
 ### 4. Insulate boards
 
@@ -172,7 +174,7 @@ After applying and trimming the heat resistant tape, position the
 boards back to back such that the 7 pads at the antenna end,
 P0.09-P0.29 pads on the edge of the Pro Micro NRF52840 line up with
 the NSS-DI01 pads on the E22.  Align the boards carefully such that
-the pads on each board are directly oposite the corresponding pads on
+the pads on each board are directly opposite the corresponding pads on
 the other board.  To allow the possibility of separating the boards
 later, the NRF board should overhanging the E22 enough that you can
 see the entirety of each pad on the bottom of the NRF board.  Hold,
@@ -208,14 +210,12 @@ the effect of the input current drain.
 
 
 <img src="images/resistor_prep.jpg" width="720px">
-<img src="images/installed_resistors.jpg" width="720px">
 
 ### 8. Optional capacitor
 
 To reduce power supply noise, you can also solder a ceramic SMD
 capacitor between the VCC and GND pads on the E22.
 
-<img src="images/tin_pads.jpg" width="720px">
 <img src="images/solder_capacitor.jpg" width="720px">
 
 ### 9. Solder second edge connections
@@ -240,7 +240,7 @@ connected or it may be damaged.  And never set SX126X_MAX_POWER define
 to more than 8 when building firmware for the E22 900M33S or it will
 be damaged.
 
-<img src="images/.jpg" width="720px">
+<img src="images/e22_power.jpg" width="720px">
 
 ### 11. Check work
 
@@ -250,14 +250,16 @@ and also check for any unintended shorts between adjacent pads.
 ### 12. Wire switch
 
 Clip the longer middle terminal of the switch so it is a bit shorter than
-the other two terminals and test fit in the case. You may need to trim
+the other two terminals and test fit in the case. You probably need to trim
 the other terminals a bit as well.
 
 Solder wires to the two farthest terminals, closest to the SMA.
 
+<img src="images/wire_switch.jpg" width="720px">
+
 ### 13. Install SMA pigtail
 
-Use a nut or a fews washer inside the case to adjust the exposed length of the SMA jack so
+Use a nut or a few washer inside the case to adjust the exposed length of the SMA jack so
 that the antenna fits properly.  Tighten the nut snugly while holding
 the jack so the pigtail touches the bottom of the case where it
 connects to the SMA jack to allow room for the switch.  Test fit the
@@ -265,19 +267,19 @@ antenna;  it should get tight just before it reaches the nut.  If it
 contacts the nut first, adjust the inside spacing.
 
 Carefully connect the pigtail U.FL to the E22 and be careful not to
-pull or twist it off durring the remainder of the assembly.
+pull or twist it off during the remainder of the assembly.
 
-<img src="images/.jpg" width="720px">
+<img src="images/install_sma.jpg" width="720px">
 
 ### 14. Connect Antenna or 50 ohm load
 
 Never power up the E22 or connect the USB without an antenna or load
 connected or it may be damaged.
 
-<img src="images/.jpg" width="720px">
+<img src="images/connect_antenna.jpg" width="720px">
 
 
-### 15. Connect switch battery wires
+### 15. Connect switch and battery wires
 
 As you make the remaining connections, place the boards and switch in
 position and trim wires close to the required length so they will fit
@@ -285,26 +287,33 @@ neatly in the case.
 
 Solder the wire on the switch terminal closest to the SMA to one of
 the LDO terminals which are connected to the +5V USB pads (You can
-leave this off if you don't the option of higher power).  It is
+leave this off if you don't want the option of higher power).  It is
 unfortunate that USB power is not connected to a pad on this board.
 But, it is easy to use a continuity tester to find a convenient LDO
 pin which connects to the power pins which are the larger pads,
 second from either end of the USB connector.
+
+<img src="images/ldo.jpg" width="720px">
 
 Move the switch toggle to the off position, closest to the case.
 
 Connect the wire from the middle switch terminal to the B+ or raw pad,
 or to the VCC pads of the E22.
 
-If you don't have a jack to fit the battery connector, you may wish to
-sacrifice the battery charger if it was included and use it's jack and
-wire for the battery connection.  Or, you may carefully solder the
-battery lead directly if you don't want the battery to be removeable.
+<img src="images/b+.jpg" width="720px">
 
-Connect the closer switch terminal to the positive (red) battery lead
+If you don't have a jack to fit the battery connector and you don't
+need the battery charger that may have come with the battery, you can
+use it's jack and wire for the battery connection.  Or, you may
+carefully solder the battery lead directly if you don't want the
+battery to be removable.
+
+<img src="images/jack.jpg" width="720px">
+
+Connect the closest switch terminal to the positive (red) battery lead
 or the correct battery jack wire.
 
-<img src="images/.jpg" width="720px">
+<img src="images/switch_bat.jpg" width="720px">
 
 ### 16. Install switch
 
@@ -315,20 +324,22 @@ The off position of the switch is towards the case and the on position
 is towards the SMA jack.  Note however, that the node will also be
 powered on when the switch is off if the USB is connected.
 
-<img src="images/.jpg" width="720px">
+<img src="images/install_switch.jpg" width="720px">
 
 ### 17. Install battery
 
-Check that the switch to the off position and that the antenna and
+Check that the switch is in the off position and that the antenna and
 U.FL are still connected.
 
 Solder the negative (black) lead of the battery or jack wire to a GND
 pad.
 
+<img src="images/bat_gnd.jpg" width="720px">
+
 If you used a connector for the battery, connect it.
 Arrange wires and place the battery in the case.
 
-<img src="images/.jpg" width="720px">
+<img src="images/install_bat.jpg" width="720px">
 
 ### 18. Assemble case
 
@@ -337,14 +348,14 @@ the case with the USB connector level and inserted into the USB hole.
 Then, press the boards down lightly to seat the edge of the E22 RF
 shield against the wall in the middle of the case so it can't slide
 away from the USB hole.  If the USB connector won't fit the hole
-because of filiment sag, carefully trim to fit.
+because of filament sag, carefully trim to fit.
 
 Carefully install the case lid, taking care not to pinch wires.  You
 may want to use some heat resistant tape to keep the longer wires in
 place at the side of the case away from the protruding parts of the
 lid.
 
-<img src="images/.jpg" width="720px">
+<img src="images/assemble_case.jpg" width="720px">
 
 ## Usage notes:
 
@@ -366,10 +377,12 @@ It is worth repeating here that the antenna MUST be connected anytime
 the USB is connected or the switch is on, including when charging to
 avoid damaging the E22 module.  The 3D design files include an
 optional safety device which, when screwed onto the SMA jack, will
-prevent the battery switch from accedently being turned on. Use this
-in case you wish to carry the node with the antenna detatched.  If you
+prevent the battery switch from accidentally being turned on. Use this
+in case you wish to carry the node with the antenna detached.  If you
 really must charge the battery without an antenna connected, connect
 a 50 Ohm load.
+
+<img src="images/switch_lock.jpg" width="720px">
 
 When operating on battery power, the voltage supplied to the E22
 module is between 4.2 and 3.0 volts and for most of that range it will
@@ -391,7 +404,9 @@ When charging, the blue LED will remain lit until the battery is
 almost fully charged, then it will cycle on and off until fully
 charged.
 
+<img src="images/charging.jpg" width="720px">
+
 When running from battery power, the red LED will periodically flash
 very briefly and will flash longer when transmitting.  When running
-from USB poweer, the red LED will flash every 2 seconds.
+from USB power, the red LED will flash every 2 seconds.
 
