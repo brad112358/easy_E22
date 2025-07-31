@@ -89,6 +89,8 @@ Note: Product links are examples and do not imply strong recommendation.
 
     Every workbench should have a roll of this [stuff](https://www.amazon.com/ELEGOO-Polyimide-Temperature-Resistant-Multi-Sized/dp/B072Z92QZ2).
 
+<img src="images/parts.jpg" width="720px">
+
 ## E22/NRF52 PRO MICRO PIN ASSIGNMENT
 
 | Pin   | Function    |     | Pin      | Function     |
