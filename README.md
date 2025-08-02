@@ -30,7 +30,7 @@ as this is not an introduction to Meshtastic.
 
 Note: Product links are examples and do not imply strong recommendation.
 
-- Low cost "Pro Micro compatible" NRF52840 dev module
+- "Pro Micro compatible" NRF52840 dev module
 
     Such as the Teyleten, Tenstar Robot or Nice Nano.
     These can be found for less than $3 each.
@@ -60,6 +60,14 @@ Note: Product links are examples and do not imply strong recommendation.
 - 915/868 MHz Antenna
 
     A high quality hinged dipole fits and works well.
+    
+    Unfortunately, three out of three different brands I purchased
+    from Amazon did not come close to high quality and two of the
+    three seemed to be less efficient multi-band antennas.
+    
+    The one that came with my Station G2 was close, needing only a
+    slightly longer element to bring the resonate frequency down a bit
+    from ~960 MHz.  The result looks very good now on the VNA.
 
     When choosing antennas, be aware of the difference between SMA and
     RP-SMA.  It is, unfortunately, possible to attach an RP-SMA
@@ -158,6 +166,9 @@ install the Meshtastic firmware.  Note, this node is not yet supported
 in the Meshtastic firmware source, so I have provided a development
 [firmware binary](firmware.uf2).  The source is
 [here](https://github.com/brad112358/meshtastic_firmware/tree/easy_promicro_e22).
+
+After everything is flashed, plug just the NRF board into USB power
+and verify you can pair and connect to it with the Meshtastic app.
 
 ### 3. Set battery charge current
 
@@ -271,7 +282,7 @@ Solder wires to the two farthest terminals, closest to the SMA.
 
 ### 13. Install SMA pigtail
 
-Use a nut or a few washer inside the case to adjust the exposed length of the SMA jack so
+Use a nut or a few washers inside the case to adjust the exposed length of the SMA jack so
 that the antenna fits properly.  Tighten the nut snugly while holding
 the jack so the pigtail touches the bottom of the case where it
 connects to the SMA jack to allow room for the switch.  Test fit the
@@ -356,8 +367,8 @@ Arrange wires and place the battery in the case.
 ### 18. Assemble case
 
 If you haven't already, slide the board assembly fully into place in
-the case with the USB connector level and inserted into the USB hole.
-Then, press the boards down lightly to seat the edge of the E22 RF
+with the USB connector level and inserted into the USB hole.
+Then, gently press the boards down to seat the edge of the E22 RF
 shield against the wall in the middle of the case so it can't slide
 away from the USB hole.  If the USB connector won't fit the hole
 because of filament sag, carefully trim to fit.
