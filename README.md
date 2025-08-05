@@ -86,7 +86,7 @@ Note: Product links are examples and do not imply strong recommendation.
 
 - 2 resistors with leads; 1/4 - 1/8 Watt 10K Ohm 1% recommended
 
-    1/4 Watt is easier to fit.  1K-1M Ohm 5 and up to 10% resistors
+    1/8 Watt is easier to fit.  1K-1M Ohm and up to 10% resistors
     will also work, but both must be the same value and you may need
     to adjust the ADC multiplier override ratio for accurate battery
     voltage readings.
