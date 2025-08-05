@@ -10,6 +10,27 @@ basic but powerful DIY Meshtastic node with the following features:
 - Based on 2 easy to obtain COTS modules
 - Relatively easy assembly and soldering with no custom PCB required
 
+<!-- I think the operation of the switch could confuse many people,
+including me. I like your term "battery switch," so I've made sure to
+always use that, instead of just "switch." -->
+
+<!-- Sorry if this sounds a little too "salesy," but without some
+horn tooting, I think it's hard to appreciate what you've done here. -->
+
+The fortunate alignment of castellated edge connections on
+the E22 module with the connections on the NRF52 module
+allow most signals to pass between boards with no wiring.
+Just careful positioning, a little solder, and three
+header pins connect all signals.
+Point-to-point wiring is used only for battery power.
+
+The tightly integrated mechanical and electrical design give this node
+outstanding performance in a compact package.
+The hinged and swiveling antenna matches the physical design of
+the node, shielding the battery power switch from accidental bumps.
+This node works well when folded, yet makes no compromises when
+straightened up at your destination.
+
 <img src="images/easy_pocket_node.jpg" width="1000px">
 
 ## Target audience
@@ -29,6 +50,12 @@ as this is not an introduction to Meshtastic.
 ## Parts list:
 
 Note: Product links are examples and do not imply strong recommendation.
+However note the way part groups compliment
+each other, specfically, the hinged antenna, the right angle SMA
+connector, and the tiny switch.
+Also, the pin layout of the NRF52840 module was chosen to match
+well with the E22 module pins.
+These are not affiliate links.
 
 - "Pro Micro compatible" NRF52840 dev module
 
@@ -48,13 +75,14 @@ Note: Product links are examples and do not imply strong recommendation.
     they are capable of over 1 amp output without significant voltage
     drop.  Higher C cells will produce slightly higher RF output.
     Larger cells will require a larger case.  You may also want a
-    matching JST PH 2.0
-    [socket](https://www.aliexpress.us/item/3256802377876396.html).
+    matching JST PH 2.0 socket from
+    [AliExpress](https://www.aliexpress.us/item/3256802377876396.html).
 
 - Mini micro 3 pin SPDT toggle switch
 
-    The switch needs to be smaller than is common, I used
-    [this one](https://www.amazon.com/dp/B075RDYMQQ) which is 8.2mm x 5.1mm
+    The battery switch needs to be smaller than is common, I used
+    this one from
+    [Amazon](https://www.amazon.com/dp/B075RDYMQQ) which is 8.2mm x 5.1mm
     and just fits.
 
 - 915/868 MHz Antenna
@@ -84,12 +112,16 @@ Note: Product links are examples and do not imply strong recommendation.
     22-24 AWG stranded Silicone wire is recommended to reduce voltage
     drop and keep RF power output up to spec.
 
-- 2 resistors with leads; 1/4 - 1/8 Watt 10K Ohm 1% recommended
+- Two battery voltage sensing divider resistors
 
-    1/8 Watt is easier to fit.  1K-1M Ohm and up to 10% resistors
-    will also work, but both must be the same value and you may need
-    to adjust the ADC multiplier override ratio for accurate battery
-    voltage readings.
+    Most any pair of same value, axial-lead resistors will work to
+    divide the battery voltage in half so that it can be measured
+    reliably by the ADC.
+    10K - 1M Ohm is recommended, as lower values may impact battery life.
+    1/4 - 1/8 Watt will work, but 1/8 Watt is easier to fit.
+    1% recommended, but up to 10% will work.
+    You may need to adjust the ADC multiplier override ratio for
+    accurate battery voltage readings.
 
 - Common 2.54 mm pin header
 
@@ -97,8 +129,50 @@ Note: Product links are examples and do not imply strong recommendation.
     
 - Heat resistant tape
 
-    Every workbench should have a roll of this [stuff](https://www.amazon.com/ELEGOO-Polyimide-Temperature-Resistant-Multi-Sized/dp/B072Z92QZ2).
+    Every workbench should have a roll of this stuff from
+    [Amazon](https://www.amazon.com/ELEGOO-Polyimide-Temperature-Resistant-Multi-Sized/dp/B072Z92QZ2).
+    Often called Kapton tape.
 
+<!-- Since I think your focus is build instructions, I've proposed
+wiring tables that omit pins without connections in your design. -->
+
+## E22 module wiring to NRF52 module
+
+| E22 Pin Number | E22 Signal | NRF52 Pin | Method        |
+| -------------- | ---------- | --------- | ------------- |
+| 12             | GND        | N/C       | No connection |
+| 13             | DIO1       | P0.29 D20 | Castellation  |
+| 14             | BUSY       | P0.02 D19 | Castellation  |
+| 15             | NRST       | P1.15 D18 | Castellation  |
+| 16             | MISO       | P1.13 D15 | Castellation  |
+| 17             | MOSI       | P1.11 D14 | Castellation  |
+| 18             | SCK        | P1.10 D15 | Castellation  |
+| 19             | NSS        | P1.09 D10 | Castellation  |
+| -------------- | ---------- | --------- | ------------- |
+| 11             | GND        | GND       | Header pin    |
+| 10             | VCC        | B+        | Wire          |
+| -------------- | ---------- | --------- | ------------- |
+| 7              | TXEN       | P1.00 D6  | Header pin    |
+| 6              | RXEN       | P0.11 D7  | Header pin    |
+
+## Battery sense voltage divider wiring
+
+| NRF52 Pin | Battery sense voltage divider |
+| --------- | ----------------------------- |
+| P0.31 D21 | R1 + R2                       |
+| B+        | R1                            |
+| GND       | R2                            |
+
+## Power wiring
+| Source            | Function         | Destination           |
+| ----------------- | ---------------- | --------------------- |
+| NRF52 pin B+      | Battery positive | Battery switch common |
+| NRF52 pin GND     | Ground           | Battery negative      |
+| NRF52 5V USB      | 5 Volts          | Battery switch off    |
+| Battery switch on | Battery          | Battery positive      |
+
+<!-- If you can live with the wiring tables above, maybe there's
+no need for other pin assignments below? -->
 ## E22/NRF52 PRO MICRO PIN ASSIGNMENT
 
 | Pin   | Function    |     | Pin      | Function     |
@@ -124,10 +198,27 @@ Note: Product links are examples and do not imply strong recommendation.
 
 ## Build procedure
 
-This node is constructed primarily by temporarily gluing, taping or
-gently clamping (use a small vise with rubber bumpers), and then
-soldering, the NRF development board directly to an EBYTE E22 900m33S.
+Instead of a custom PCB, the castellated edge of the E22 module
+is soldered on the insulated back of the NRF52 module.
+Temporary gluing, taping or
+gentle clamping (use a small vise with rubber bumpers), will help
+with soldering.
 Construction time may be 2-4 hours.
+
+<!-- The landmine I see awaiting everyone's foot is soldering
+E22 pin 12 to the adjacent battery sense pin on the NRF52.
+You're on a roll making seven perfect solder bridges, when
+you make an eigth and then recognize your mistake.
+
+Maybe consider suggesting installing the battery sense voltage
+divider resistors first?
+This could help keep room between pin 12 the NRF52 pad where
+you want no connection. -->
+
+When soldering the castellated edge, be sure *not* to solder
+pin 12 of the E22 module.
+It's an unused ground and the corresponding pad of the NRF52 module
+will be used for the battery sense voltage divider.
 
 Strip and tin each wire before soldering in place.
 
@@ -154,12 +245,17 @@ Follow the Meshtastic instructions to upgrade to the
 [Method 1: UF2](https://meshtastic.org/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#method-1-using-the-uf2-file-recommended).
 Download and install the
 [latest version](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/latest)
-of the nice update-nano .uf2 file.  Note that since there is no reset
+of the update nice nano bootloader,
+e.g. `update-nice_nano_bootloader-0.9.2_nosd.uf2`.
+<!-- Is that really the file you wanted? -->
+
+Note that since there is no reset
 button, you need to carefully and briefly short the RST and GND pads
 twice in 1/2 second to activate bootloader mode.  Be sure you short
-only the correct pins, 3rd and 4th from the end.  A small tweezers
-works well.  It may take a few tries; look for the slow "breathing"
-red LED.
+only the correct pins, 3rd and 4th from the end.
+Small tweezers work well.
+It may take a few tries; look for the slow "breathing"
+red LED to show success.
 
 Once the bootloader is installed, you can use the same method to
 install the Meshtastic firmware.  Note, this node is not yet supported
@@ -196,17 +292,19 @@ when the resistors are later installed.
 ### 5. Align and very gently clamp boards
 
 After applying and trimming the heat resistant tape, position the
-boards back to back such that the 7 pads at the antenna end,
-P0.09-P0.29 pads on the edge of the Pro Micro NRF52840 line up with
-the NSS-DI01 pads on the E22.  Align the boards carefully such that
-the pads on each board are directly opposite the corresponding pads on
-the other board.  To allow the possibility of separating the boards
-later, the NRF board should overhanging the E22 enough that you can
-see the entirety of each pad on the bottom of the NRF board.  Hold,
-very gently clamp, temporarily tape, or glue the boards in this position.
+boards back to back such that pads
+P0.09-P0.29 on the Pro Micro NRF52840 line up with
+pads NSS-DI01 (pins 19-13) on the E22. Align the boards carefully such that
+eight pads on each board are directly opposite, but not touching.
+
+> ⚠️ **Warning:** Only seven of the eight aligned pads will be bridged,
+so the NRF board should overhanging the E22 enough that you can
+see the entirety of each pad on the bottom of the NRF board.
+
+Hold, very gently clamp, temporarily tape, or glue the boards in this position.
 
 If you position the boards carefully, with ~.1mm gap between the inner
-edges of the pads on the NRF and the outer edge of the E22, you can
+edges of the pads on the NRF and the castellated edge of the E22, you can
 make the connections with solder bridges and still easily unsolder to
 separate the boards later in case you brick it and need to access the
 programming pads on the bottom.
@@ -221,6 +319,8 @@ corresponding castellated E22 pad.  Before proceeding to solder the 5
 remaining connections on this edge of the boards, check that the
 spacing is correct and that each connection is correct as in the table
 and #defines below.
+<!-- I'm not seeing #defines below, maybe you mean pin assignments above?
+Maybe now it's a wiring table above? -->
 
 <img src="images/solder_edge1.jpg" width="720px">
 
@@ -235,6 +335,8 @@ board.
 <img src="images/resistors.jpg" width="720px">
 
 ### 8. Optional capacitor
+<!-- Do you want to say anything about an appropriate range of values?
+I didn't see anything specific in the datasheet. Just "ceramic capacitor." -->
 
 To reduce power supply noise, you can also solder a ceramic SMD
 capacitor between the VCC and GND pads on the E22.
@@ -258,7 +360,7 @@ on the first edge.
 Lastly, we need to power the E22; Solder a short length of insulated wire from
 VCC on the E22 to the B+ or RAW pad.
 
-Warning: Never power up the E22 without an antenna or 50 ohm load
+> ⚠️ **Warning:** Never power up the E22 without an antenna or 50 ohm load
 connected or it may be damaged.  And never set SX126X_MAX_POWER define
 to more than 8 when building firmware for the E22 900M33S or it will
 be damaged.
@@ -270,9 +372,9 @@ be damaged.
 Use a continuity tester to carefully check each soldered connection
 and also check for any unintended shorts between adjacent pads.
 
-### 12. Wire switch
+### 12. Wire battery switch
 
-Clip the longer middle terminal of the switch so it is a bit shorter than
+Clip the longer middle terminal of the battery switch so it is a bit shorter than
 the other two terminals and test fit in the case. You probably need to trim
 the other terminals a bit as well.
 
@@ -285,7 +387,7 @@ Solder wires to the two farthest terminals, closest to the SMA.
 Use a nut or a few washers inside the case to adjust the exposed length of the SMA jack so
 that the antenna fits properly.  Tighten the nut snugly while holding
 the jack so the pigtail touches the bottom of the case where it
-connects to the SMA jack to allow room for the switch.  Test fit the
+connects to the SMA jack to allow room for the battery switch.  Test fit the
 antenna;  it should get tight just before it reaches the nut.  If it
 contacts the nut first, adjust the inside spacing.
 
@@ -302,13 +404,13 @@ connected or it may be damaged.
 <img src="images/connect_antenna.jpg" width="720px">
 
 
-### 15. Connect switch and battery wires
+### 15. Connect battery switch and battery wires
 
-As you make the remaining connections, place the boards and switch in
+As you make the remaining connections, place the boards and battery switch in
 position and trim wires close to the required length so they will fit
 neatly in the case.
 
-Solder the wire on the switch terminal closest to the SMA to one of
+Solder the wire on the battery switch terminal closest to the SMA to one of
 the LDO terminals which are connected to the +5V USB pads (You can
 leave this off if you don't want the option of higher power).  It is
 unfortunate that USB power is not connected to a pad on this board.
@@ -318,9 +420,9 @@ second from either end of the USB connector.
 
 <img src="images/ldo.jpg" width="720px">
 
-Move the switch toggle to the off position, closest to the case.
+Move the battery switch toggle to the off position, closest to the case.
 
-Connect the wire from the middle switch terminal to the B+ or raw pad,
+Connect the wire from the middle battery switch terminal to the B+ or raw pad,
 or to the VCC pads of the E22.
 
 <img src="images/b+.jpg" width="720px">
@@ -333,17 +435,17 @@ battery to be removable.
 
 <img src="images/jack.jpg" width="720px">
 
-Connect the closest switch terminal to the positive (red) battery lead
+Connect the closest battery switch terminal to the positive (red) battery lead
 or the correct battery jack wire.
 
 <img src="images/switch_bat.jpg" width="720px">
 
-### 16. Install switch
+### 16. Install battery switch
 
-Tighten the switch nut snugly while preventing the switch from
+Tighten the battery switch nut snugly while preventing the switch from
 rotating.
 
-The off position of the switch is towards the case and the on position
+The off position of the battery switch is towards the case and the on position
 is towards the SMA jack.  Note however, that the node will also be
 powered on when the switch is off if the USB is connected.
 
@@ -351,7 +453,7 @@ powered on when the switch is off if the USB is connected.
 
 ### 17. Install battery
 
-Check that the switch is in the off position and that the antenna and
+Check that the battery switch is in the off position and that the antenna and
 U.FL are still connected.
 
 Solder the negative (black) lead of the battery or jack wire to a GND
@@ -387,7 +489,7 @@ the internal 1 S Lithium battery.
 
 When the battery switch is on (towards the SMA jack), the battery is
 connected to both the battery terminal of the NRF board and VCC of the
-E22.  If the USB port is plugged in when the switch is on, the onboard
+E22.  If the USB port is plugged in when the battery switch is on, the onboard
 charger will charge the 1000 mAh battery in about 3 hours, assuming
 you shorted the square pads as suggested.
 
@@ -396,10 +498,19 @@ completely disconnected and the USB voltage is connected to the B+ pad
 and VCC of the E22.  This means that the battery will not charge with
 the switch off and that the node will operate only from USB power.
 
-It is worth repeating here that the antenna MUST be connected anytime
-the USB is connected or the switch is on, including when charging to
-avoid damaging the E22 module.  When the antenna is installed, it
-helps protect the switch from being inadvertently changed.  The 3D
+| Battery Switch | USB Power     | Node On | Charging | TX Power |
+| -------------- | ------------- | ------- | -------- | -------- |
+| On             | Connected     | ✅      | ✅       | ~1 Watt  |
+| Off            | Connected     | ✅      | ❌       | ~2 Watts |
+| On             | Not connected | ✅      | ❌       | ~1 Watt  |
+| Off            | Not connected | ❌      | ❌       | none     |
+
+> ⚠️ **Warning:** The antenna MUST be connected anytime
+USB power is connected or the battery switch is on, including when charging, to
+avoid damaging the E22 module.
+
+When the antenna is installed, it
+helps protect the battery switch from being inadvertently changed.  The 3D
 design files include an optional safety device which, when screwed
 onto the SMA jack, will prevent the battery switch from accidentally
 being turned on. Use this in case you wish to carry the node with the
@@ -412,11 +523,11 @@ When operating on battery power, the voltage supplied to the E22
 module is between 4.2 and 3.0 volts and for most of that range it will
 output a maximum of about 1 Watt.
 
-When operating on 5 volt USB power with the switch off, the E22 is
-capable of about 2 Watts of output power.  The Meshtastic
-`diy/easy-nrf-pro-micro_e22` variant is configured to expect battery
+When operating on 5 volt USB power with the battery switch off, the E22 is
+capable of about 2 Watts of output power.  The Meshtastic firmware
+variant `diy/easy-nrf-pro-micro_e22` is configured to expect battery
 voltage, thus, when powered via 5 Volt USB, configuring the node for 30 dBm
-output should actually produce about 33 dBm output.
+(1 Watt) output should actually produce about 33 dBm (2 Watts) output.
 
 Because they are designed for higher current applications, many cheap
 battery protection boards are set to cut off at less than the safe
