@@ -392,7 +392,7 @@ charger will charge the 1000 mAh battery in about 3 hours, assuming
 you shorted the square pads as suggested.
 
 When the battery switch is off (towards the case), the battery is
-completely disconnected and the USB voltage is connected to the b+ pad
+completely disconnected and the USB voltage is connected to the B+ pad
 and VCC of the E22.  This means that the battery will not charge with
 the switch off and that the node will operate only from USB power.
 
