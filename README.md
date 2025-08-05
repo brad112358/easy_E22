@@ -148,10 +148,10 @@ wiring tables that omit pins without connections in your design. -->
 | 17             | MOSI       | P1.11 D14 | Castellation  |
 | 18             | SCK        | P1.10 D15 | Castellation  |
 | 19             | NSS        | P1.09 D10 | Castellation  |
-| -------------- | ---------- | --------- | ------------- |
+|                |            |           |               |
 | 11             | GND        | GND       | Header pin    |
 | 10             | VCC        | B+        | Wire          |
-| -------------- | ---------- | --------- | ------------- |
+|                |            |           |               |
 | 7              | TXEN       | P1.00 D6  | Header pin    |
 | 6              | RXEN       | P0.11 D7  | Header pin    |
 
@@ -205,10 +205,13 @@ gentle clamping (use a small vise with rubber bumpers), will help
 with soldering.
 Construction time may be 2-4 hours.
 
-<!-- The landmine I see awaiting everyone's foot is soldering
+<!-- I can tell that you see the same landmine I do: soldering
 E22 pin 12 to the adjacent battery sense pin on the NRF52.
 You're on a roll making seven perfect solder bridges, when
 you make an eigth and then recognize your mistake.
+
+I think Kapton tape over pin 12 is a good idea, but also a
+step easiy missed.
 
 Maybe consider suggesting installing the battery sense voltage
 divider resistors first?
@@ -217,7 +220,7 @@ you want no connection. -->
 
 When soldering the castellated edge, be sure *not* to solder
 pin 12 of the E22 module.
-It's an unused ground and the corresponding pad of the NRF52 module
+It's an unused ground, and the corresponding pad of the NRF52 module
 will be used for the battery sense voltage divider.
 
 Strip and tin each wire before soldering in place.
@@ -251,7 +254,7 @@ e.g. `update-nice_nano_bootloader-0.9.2_nosd.uf2`.
 
 Note that since there is no reset
 button, you need to carefully and briefly short the RST and GND pads
-twice in 1/2 second to activate bootloader mode.  Be sure you short
+twice within 1/2 second to activate bootloader mode.  Be sure you short
 only the correct pins, 3rd and 4th from the end.
 Small tweezers work well.
 It may take a few tries; look for the slow "breathing"
@@ -281,8 +284,10 @@ bridge the pads with solder, keeping it as thin as you can.
 A layer or two of polyimide or other high temperature tape between the
 boards is recommended to avoid any chance of shorting exposed vias.
 Leave the E22 pads on the edge with VCC exposed, but cover the back
-surface of the pads on the other edge.  You might want to cover the
-entire GND pad next to DI01 on the E22 to avoid any chance of shorts
+surface of the pads on the other edge.
+
+Cover the
+entire pin 12 GND pad next to DI01 on the E22 to avoid any chance of shorts
 when the resistors are later installed.
 
 <img src="images/tape_nrf.jpg" width="720px">
@@ -298,7 +303,7 @@ pads NSS-DI01 (pins 19-13) on the E22. Align the boards carefully such that
 eight pads on each board are directly opposite, but not touching.
 
 > ⚠️ **Warning:** Only seven of the eight aligned pads will be bridged,
-so the NRF board should overhanging the E22 enough that you can
+so the NRF board should overhang the E22 enough that you can
 see the entirety of each pad on the bottom of the NRF board.
 
 Hold, very gently clamp, temporarily tape, or glue the boards in this position.
