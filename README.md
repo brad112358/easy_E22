@@ -1,4 +1,4 @@
-# Easy DIY E22 NRF52840 build instructions #
+# Easy DIY E22 NRF52840 Build Instructions #
 
 This project provides build instructions and 3D print files for a
 basic but powerful DIY Meshtastic node with the following features:
@@ -66,14 +66,14 @@ Note: Product links are examples and do not imply strong recommendation.
     three seemed to be less efficient multi-band antennas.
     
     The one that came with my Station G2 was close, needing only a
-    slightly longer element to bring the resonate frequency down a bit
+    slightly longer element to bring the resonant frequency down a bit
     from ~960 MHz.  The result looks very good now on the VNA.
 
     When choosing antennas, be aware of the difference between SMA and
     RP-SMA.  It is, unfortunately, possible to attach an RP-SMA
     antenna to an SMA jack, but there will be no electrical connection
     and you will damage the E22.  Always make sure you see a pin on
-    one or the other when connecting.
+    one end or the other when connecting.
 
 - SMA female right angle Pigtail
 
@@ -126,7 +126,7 @@ Note: Product links are examples and do not imply strong recommendation.
 
 This node is constructed primarily by temporarily gluing, taping or
 gently clamping (use a small vise with rubber bumpers), and then
-soldering, the NRF development board directly to an EBYTE E22 900m30S.
+soldering, the NRF development board directly to an EBYTE E22 900m33S.
 Construction time may be 2-4 hours.
 
 Strip and tin each wire before soldering in place.
@@ -146,12 +146,12 @@ on tightly.
 Be sure to perform the initial flash of the firmware on the NRF board
 before proceeding with the assembly so that the debug pads on the
 bottom of the board will be available in case anything goes wrong.
-This also ensures that the TXEN pad is not driven when it shouldn't be
+This also ensures that the TXEN pad is not driven when it shouldn't be,
 which could damage the E22.
 
 Follow the Meshtastic instructions to upgrade to the
 [Adafruit bootloader](https://github.com/adafruit/Adafruit_nRF52_Bootloader) using
-[Method 1: UFL](https://meshtastic.org/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#method-1-using-the-uf2-file-recommended).
+[Method 1: UF2](https://meshtastic.org/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#method-1-using-the-uf2-file-recommended).
 Download and install the
 [latest version](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/latest)
 of the nice update-nano .uf2 file.  Note that since there is no reset
@@ -392,7 +392,7 @@ charger will charge the 1000 mAh battery in about 3 hours, assuming
 you shorted the square pads as suggested.
 
 When the battery switch is off (towards the case), the battery is
-completely disconnected and the USB voltage is connected to the b+ pad
+completely disconnected and the USB voltage is connected to the B+ pad
 and VCC of the E22.  This means that the battery will not charge with
 the switch off and that the node will operate only from USB power.
 
@@ -414,9 +414,9 @@ output a maximum of about 1 Watt.
 
 When operating on 5 volt USB power with the switch off, the E22 is
 capable of about 2 Watts of output power.  The Meshtastic
-diy/easy-nrf-pro-micro_e22 variant is configured to expect battery
-voltage, thus, when powered via 5 Volt USB, configuring the node for 30 dBi
-output should actually produce about 33 dBi output.
+`diy/easy-nrf-pro-micro_e22` variant is configured to expect battery
+voltage, thus, when powered via 5 Volt USB, configuring the node for 30 dBm
+output should actually produce about 33 dBm.
 
 Because they are designed for higher current applications, many cheap
 battery protection boards are set to cut off at less than the safe
