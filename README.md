@@ -416,7 +416,7 @@ When operating on 5 volt USB power with the switch off, the E22 is
 capable of about 2 Watts of output power.  The Meshtastic
 `diy/easy-nrf-pro-micro_e22` variant is configured to expect battery
 voltage, thus, when powered via 5 Volt USB, configuring the node for 30 dBm
-output should actually produce about 33 dBm output.
+output should actually produce about 33 dBm.
 
 Because they are designed for higher current applications, many cheap
 battery protection boards are set to cut off at less than the safe
