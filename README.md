@@ -146,7 +146,7 @@ wiring tables that omit pins without connections in your design. -->
 | 15             | NRST       | P1.15 D18 | Castellation  |
 | 16             | MISO       | P1.13 D15 | Castellation  |
 | 17             | MOSI       | P1.11 D14 | Castellation  |
-| 18             | SCK        | P1.10 D15 | Castellation  |
+| 18             | SCK        | P1.10 D16 | Castellation  |
 | 19             | NSS        | P1.09 D10 | Castellation  |
 |                |            |           |               |
 | 11             | GND        | GND       | Header pin    |
@@ -282,7 +282,7 @@ bridge the pads with solder, keeping it as thin as you can.
 ### 4. Insulate boards
 
 A layer or two of polyimide or other high-temperature tape between the
-boards are recommended to avoid any chance of shorting exposed vias.
+boards is recommended to avoid any chance of shorting exposed vias.
 Leave the E22 pads on the edge with VCC exposed, but cover the back
 surface of the pads on the other edge.
 
