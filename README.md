@@ -10,25 +10,16 @@ basic but powerful DIY Meshtastic node with the following features:
 - Based on two easy-to-obtain COTS modules
 - Relatively easy assembly and soldering with no custom PCB required
 
-<!-- I think the operation of the switch could confuse many people,
-including me. I like your term "battery switch," so I've made sure to
-always use that, instead of just "switch." -->
+The castellated edge connections on the E22 module along with the
+flexibility the NRF52 MCU allows in assigning pins to functions allow most
+signals to pass between boards with no wiring.  Just careful
+positioning, a little solder, and three header pins connect all
+signals.  Point-to-point wiring is used only for battery power.
 
-<!-- Sorry if this sounds a little too "salesy," but without some
-horn tooting, I think it's hard to appreciate what you've done here. -->
-
-The fortunate alignment of castellated edge connections on
-the E22 module with the connections on the NRF52 module
-allow most signals to pass between boards with no wiring.
-Just careful positioning, a little solder, and three
-header pins connect all signals.
-Point-to-point wiring is used only for battery power.
-
-The tightly integrated mechanical and electrical design gives this node
-outstanding performance in a compact package.
-The hinged and swiveling antenna matches the physical design of
-the node, shielding the battery power switch from accidental bumps.
-This node works well when folded, yet makes no compromises when
+The E22 gives this node outstanding performance in a compact package.
+The hinged and swiveling antenna matches the physical design of the
+node, shielding the battery power switch from accidental bumps.  This
+node works well when folded, yet makes no compromises when
 straightened up at your destination.
 
 <img src="images/easy_pocket_node.jpg" width="1000px">
@@ -49,18 +40,16 @@ as this is not an introduction to Meshtastic.
 
 ## Parts list:
 
-Note: Product links are examples and do not imply a strong recommendation.
-However, note the way groups of parts complement
-each other, specifically, the hinged antenna, the right-angle SMA
-connector, and the tiny switch.
-Also, the NRF52840 module chosen has a pin layout that matches
-well with the E22 module pins.
+Note: Product links are examples of components with the required
+specifications and do not imply a recommendation of a specific part or
+supplier.
+
 These are not affiliate links.
 
 - "Pro Micro compatible" NRF52840 dev module
 
-    Such as the Teyleten, Tenstar Robot or Nice Nano.
-    These can be found for less than $3 each.
+    Such as the [Teyleten](https://www.amazon.com/dp/B0CYLNZ6V4), [Tenstar Robot](https://www.aliexpress.us/item/3256807958420169.html) or [Nice!Nano](https://www.aliexpress.us/item/3256805975015643.html).
+    Some of these can be found for less than $3 each.
 
 - Ebyte E22 900M33S LoRa module
 
@@ -75,7 +64,7 @@ These are not affiliate links.
     they are capable of over 1 amp output without significant voltage
     drop.  Higher C cells will produce slightly higher RF output.
     Larger cells will require a larger case.  You may also want a
-    matching JST PH 2.0 socket from
+    matching JST PH 2.0 socket like this one from
     [AliExpress](https://www.aliexpress.us/item/3256802377876396.html).
 
 - Mini micro 3-pin SPDT toggle switch
@@ -112,16 +101,17 @@ These are not affiliate links.
     22-24 AWG stranded Silicone wire is recommended to reduce voltage
     drop and keep RF power output up to spec.
 
-- Two battery voltage sensing divider resistors
+- Two battery sensing voltage divider resistors
 
     Almost any pair of the same value, axial-lead resistors will work to
     divide the battery voltage in half so that it can be measured
-    reliably by the ADC.
+    safely by the ADC.
     10K - 1M ohm is recommended, as lower values may impact battery life.
-    1/4 - 1/8 Watt will work, but 1/8 Watt is easier to fit.
+    1/4 - 1/8 watt will work, but 1/8 watt is easier to fit.
     1% recommended, but up to 10% will work.
     You may need to adjust the ADC multiplier override ratio for
-    accurate battery voltage readings.
+    accurate battery voltage readings, especially of don't use 1%
+    tolerance or choose a high higher resistance than recommended.
 
 - Common 2.54 mm pin header
 
@@ -129,72 +119,59 @@ These are not affiliate links.
     
 - Heat-resistant insulating tape
 
-    Every workbench should have a roll of this stuff from
-    [Amazon](https://www.amazon.com/ELEGOO-Polyimide-Temperature-Resistant-Multi-Sized/dp/B072Z92QZ2).
+    Every workbench should have a roll of this 
+    [Stuff](https://www.amazon.com/ELEGOO-Polyimide-Temperature-Resistant-Multi-Sized/dp/B072Z92QZ2).
     Often called Kapton tape.
 
-<!-- Since I think your focus is build instructions, I've proposed
-wiring tables that omit pins without connections in your design. -->
-
-## E22 module wiring to NRF52 module
+## E22 connections to NRF52 module
 
 | E22 Pin Number | E22 Signal | NRF52 Pin | Method        |
 | -------------- | ---------- | --------- | ------------- |
 | 12             | GND        | N/C       | No connection |
-| 13             | DIO1       | P0.29 D20 | Castellation  |
-| 14             | BUSY       | P0.02 D19 | Castellation  |
-| 15             | NRST       | P1.15 D18 | Castellation  |
-| 16             | MISO       | P1.13 D15 | Castellation  |
-| 17             | MOSI       | P1.11 D14 | Castellation  |
-| 18             | SCK        | P1.10 D16 | Castellation  |
-| 19             | NSS        | P1.09 D10 | Castellation  |
+| 13             | DIO1       | P0.29     | Direct solder |
+| 14             | BUSY       | P0.02     | Direct solder |
+| 15             | NRST       | P1.15     | Direct solder |
+| 16             | MISO       | P1.13     | Direct solder |
+| 17             | MOSI       | P1.11     | Direct solder |
+| 18             | SCK        | P1.10     | Direct solder |
+| 19             | NSS        | P1.09     | Direct solder |
 |                |            |           |               |
 | 11             | GND        | GND       | Header pin    |
 | 10             | VCC        | B+        | Wire          |
 |                |            |           |               |
-| 7              | TXEN       | P1.00 D6  | Header pin    |
-| 6              | RXEN       | P0.11 D7  | Header pin    |
+| 7              | TXEN       | P1.00     | Header pin    |
+| 6              | RXEN       | P0.11     | Header pin    |
 
-## Battery sense voltage divider wiring
+## Battery sense voltage divider connections
 
 | NRF52 Pin | Battery sense voltage divider |
 | --------- | ----------------------------- |
-| P0.31 D21 | R1 + R2                       |
+| P0.31     | R1 + R2                       |
 | B+        | R1                            |
 | GND       | R2                            |
 
 ## Power wiring
+
 | Source            | Function         | Destination           |
 | ----------------- | ---------------- | --------------------- |
 | NRF52 pin B+      | Battery positive | Battery switch common |
 | NRF52 pin GND     | Ground           | Battery negative      |
-| NRF52 5V USB      | 5 Volts          | Battery switch off    |
+| NRF52 5V USB      | 5 volts          | Battery switch off    |
 | Battery switch on | Battery          | Battery positive      |
 
-<!-- If you can live with the wiring tables above, maybe there's
-no need for other pin assignments below? -->
-## E22/NRF52 PRO MICRO PIN ASSIGNMENT
+## NRF52 module optional feature pin mappings
 
-| Pin   | Function    |     | Pin      | Function     |
-| ----- | ----------- | --- | -------- | ------------ |
-| Gnd   |             |     | vbat     |              |
-| P0.06 | Serial2 RX  |     | vbat     |              |
-| P0.08 | Serial2 TX  |     | Gnd      |              |
-| Gnd   |             |     | reset    |              |
-| Gnd   | GND         |     | ext_vcc  | *see 0.13    |
-| P0.17 | Free pin    |     | P0.31    | BATTERY_PIN  |
-| P0.20 | Free pin    |     | P0.29    | DI01         |
-| P0.22 | Free pin    |     | P0.02    | BUSY         |
-| P0.24 | Free pin    |     | P1.15    | NRST         |
-| P1.00 | TXEN        |     | P1.13    | MISO         |
-| P0.11 | RXEN        |     | P1.11    | MOSI         |
-| P1.04 | SDA         |     | P0.10    | SCK          |
-| P1.06 | SCL         |     | P0.09    | NSS          |
-|       |             |     |          |              |
-|       | Mid board   |     |          | Internal     |
-| P1.01 | GPS_TX      |     | 0.15     | LED          |
-| P1.02 | GPS_RX      |     | 0.13     | 3V3_EN       |
-| P1.07 | GPS_EN      |     |          |              |
+| Pin   | Function    |
+| ----- | ----------- |
+| P0.06 | Serial2 RX  |
+| P0.08 | Serial2 TX  |
+|       |             |
+| P1.04 | SDA         |
+| P1.06 | SCL         |
+|       |             |
+| P1.01 | GPS_TX      |
+| P1.02 | GPS_RX      |
+| P1.07 | GPS_EN      |
 
 ## Build procedure
 
@@ -204,19 +181,6 @@ Temporary gluing, taping, or
 gentle clamping (use a small vise with rubber bumpers) will help
 with soldering.
 Construction time may be 2-4 hours.
-
-<!-- I can tell that you see the same landmine I do: soldering
-E22 pin 12 to the adjacent battery sense pin on the NRF52.
-You're on a roll, making seven perfect solder bridges, when
-you make an eighth and then recognize your mistake.
-
-I think Kapton tape over pin 12 is a good idea, but also a
-step easily missed.
-
-Maybe consider suggesting installing the battery sense voltage
-divider resistors first?
-This could help keep room between pin 12 and the NRF52 pad where
-you want no connection. -->
 
 When soldering the castellated edge, be sure *not* to solder
 pin 12 of the E22 module.
@@ -250,7 +214,6 @@ Download and install the
 [latest version](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/latest)
 of the update nice nano bootloader,
 e.g., `update-nice_nano_bootloader-0.9.2_nosd.uf2`.
-<!-- Is that really the file you wanted? -->
 
 Note that since there is no reset
 button, you need to carefully and briefly short the RST and GND pads
@@ -300,7 +263,7 @@ After applying and trimming the heat-resistant tape, position the
 boards back to back, such that pads
 P0.09-P0.29 on the Pro Micro NRF52840 line up with
 pads NSS-DI01 (pins 19-13) on the E22. Align the boards carefully such that
-eight pads on each board are directly opposite, but not touching.
+last eight pads on each board are directly opposite, but not quite touching.
 
 > ⚠️ **Warning:** Only seven of the eight aligned pads will be bridged,
 so the NRF board should overhang the E22 enough that you can
@@ -323,9 +286,7 @@ to DI01.  Solder from the NRF board bottom pad to the edge of the
 corresponding castellated E22 pad.  Before proceeding to solder the 5
 remaining connections on this edge of the boards, check that the
 spacing is correct and that each connection is correct as in the table
-and #defines below.
-<!-- I'm not seeing #defines below, maybe you mean pin assignments above?
-Maybe now it's a wiring table above? -->
+above.
 
 <img src="images/solder_edge1.jpg" width="720px">
 
@@ -340,8 +301,6 @@ board.
 <img src="images/resistors.jpg" width="720px">
 
 ### 8. Optional capacitor
-<!-- Do you want to say anything about an appropriate range of values?
-I didn't see anything specific in the datasheet. Just "ceramic capacitor." -->
 
 To reduce power supply noise, you can also solder a ceramic SMD
 capacitor between the VCC and GND pads on the E22.
@@ -415,13 +374,13 @@ As you make the remaining connections, place the boards and battery switch in
 position and trim wires close to the required length so they will fit
 neatly in the case.
 
-Solder the wire on the battery switch terminal closest to the SMA to one of
-the LDO terminals, which are connected to the +5V USB pads (You can
-leave this off if you don't want the option of higher power.)
+Solder the wire on the battery switch terminal closest to the SMA to
+one of the LDO terminals, which are connected to the USB VBUS pads
+(You can leave this off if you don't want the option of higher power.)
 Unfortunately, USB power is not connected to a pad on this board.
 But, it is easy to use a continuity tester to find a convenient LDO
-pin with larger pads that connects to the USB power pins,
-second from either end of the USB connector.
+pin that connects to the USB power pins.  The USB VBUS pads are the larger
+pads second from either end of the USB connector.
 
 <img src="images/ldo.jpg" width="720px">
 
@@ -440,7 +399,7 @@ battery to be removable.
 
 <img src="images/jack.jpg" width="720px">
 
-Connect the closest battery switch terminal to the positive (red) battery lead
+Connect the remaining (closest) battery switch terminal to the positive (red) battery lead
 or the correct battery jack wire.
 
 <img src="images/switch_bat.jpg" width="720px">
@@ -505,9 +464,9 @@ the switch off, and that the node will operate only from USB power.
 
 | Battery Switch | USB Power     | Node On | Charging | TX Power |
 | -------------- | ------------- | ------- | -------- | -------- |
-| On             | Connected     | ✅      | ✅       | ~1 Watt  |
-| Off            | Connected     | ✅      | ❌       | ~2 Watts |
-| On             | Not connected | ✅      | ❌       | ~1 Watt  |
+| On             | Connected     | ✅      | ✅       | ~1 watt  |
+| Off            | Connected     | ✅      | ❌       | ~2 watts |
+| On             | Not connected | ✅      | ❌       | ~1 watt  |
 | Off            | Not connected | ❌      | ❌       | none     |
 
 > ⚠️ **Warning:** The antenna MUST be connected anytime
@@ -526,13 +485,13 @@ antenna connected, connect a 50-ohm load.
 
 When operating on battery power, the voltage supplied to the E22
 module is between 4.2 and 3.0 volts, and for most of that range, it will
-output a maximum of about 1 Watt.
+output a maximum of about 1 watt.
 
 When operating on 5-volt USB power with the battery switch off, the E22 is
-capable of about 2 Watts of output power.  The Meshtastic firmware
+capable of about 2 watts of output power.  The Meshtastic firmware
 variant `diy/easy-nrf-pro-micro_e22` is configured to expect battery
 voltage, thus, when powered via 5-volt USB, configuring the node for 30 dBm
-(1 Watt) output should produce about 33 dBm (2 Watts).
+(1 watt) output should produce about 33 dBm (2 watts).
 
 Because they are designed for higher current applications, many cheap
 battery protection boards are set to cut off at less than the safe
@@ -540,9 +499,9 @@ minimum of 3.0 volts.  To avoid damaging your battery or reducing its
 service life, it is recommended to monitor the battery voltage and
 turn off or charge your node before the battery is exhausted.
 
-When charging, the blue LED will remain lit until the battery is
-about 80% charged. Then it will cycle on and off at various intervals until fully
-charged.
+When charging, the blue LED will remain lit until the battery is about
+80% charged. Then it will cycle on and off at various intervals until
+fully charged.
 
 <img src="images/charging.jpg" width="720px">
 
@@ -550,3 +509,7 @@ When running from battery power, the red LED will periodically flash
 very briefly and will flash longer when transmitting.  When running
 from USB power, the red LED will flash every 2 seconds.
 
+## Acknowledgments:
+
+A big thank-you to Bob Van Valzah for testing the node and reviewing
+and improving this document!
