@@ -10,11 +10,11 @@ basic but powerful DIY Meshtastic node with the following features:
 - Based on two easy-to-obtain COTS modules
 - Relatively easy assembly and soldering with no custom PCB required
 
-The castellated edge connections on the E22 module along with the
-flexibility the NRF52 MCU allows in assigning pins to functions allow most
-signals to pass between boards with no wiring.  Just careful
-positioning, a little solder, and three header pins connect all
-signals.  Point-to-point wiring is used only for battery power.
+The castellated edge connections on the E22 module, along with the pin
+assignment flexibility of the NRF52 MCU, allow most signals to pass
+between boards with no wiring.  Just careful positioning, a little
+solder, and three header pins connect all signals.  Point-to-point
+wiring is used only for battery power.
 
 The E22 gives this node outstanding performance in a compact package.
 The hinged and swiveling antenna matches the physical design of the
