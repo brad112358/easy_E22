@@ -85,6 +85,10 @@ These are not affiliate links.
     The one that came with my Station G2 was close, needing only a
     slightly longer element to bring the resonant frequency down a bit
     from ~960 MHz.  The result looks very good now on the VNA.
+    
+    The ALFA Network ARS-915PR I ordered from
+    [ROKLAND](https://store.rokland.com/collections/802-11ah-wi-fi-halow/products/alfa-network-ars-915pr-2-dbi-helium-miner-hotspot-replacement-antenna-with-90-elbow-for-rak-bobcat-sensecap-m1)
+    appears well tuned on my VNA.
 
     When choosing antennas, be aware of the difference between SMA and
     RP-SMA.  It is, unfortunately, possible to attach an RP-SMA
