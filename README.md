@@ -110,7 +110,7 @@ These are not affiliate links.
     1/4 - 1/8 watt will work, but 1/8 watt is easier to fit.
     1% recommended, but up to 10% will work.
     You may need to adjust the ADC multiplier override ratio for
-    accurate battery voltage readings, especially of don't use 1%
+    accurate battery voltage readings, especially if you don't use 1%
     tolerance or choose a high higher resistance than recommended.
 
 - Common 2.54 mm pin header
@@ -441,7 +441,7 @@ because of filament sag, carefully trim to fit.
 
 Carefully install the case lid, taking care not to pinch wires.  You
 may want to use some heat-resistant tape to keep the longer wires in
-place at the side of the case away from the protruding parts of the
+place at the side of the case, away from the protruding parts of the
 lid.
 
 <img src="images/assemble_case.jpg" width="720px">
