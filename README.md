@@ -93,7 +93,7 @@ These are not affiliate links.
     When choosing antennas, be aware of the difference between SMA and
     RP-SMA.  It is, unfortunately, possible to attach an RP-SMA
     antenna to an SMA jack, but there will be no electrical connection,
-    and you will damage the E22.  Always make sure you see a pin on
+    and you may damage the E22.  Always make sure you see a pin on
     one end or the other when connecting.
 
 - SMA female right-angle Pigtail
@@ -315,11 +315,12 @@ capacitor between the VCC and GND pads on the E22.
 
 On the other edge of the boards, solder short solid conductors from
 RXEN to P0.11, from TXEN to P1.00, and from GND to GND.  Notice the
-GND connection is offset by one position.  Insulation is not needed
-here, but the use of trimmed header pins is recommended if you didn't
-permanently affix the boards with glue.  The rigid pins help hold the
-boards together and reduce the chance of breaking solder connections
-on the first edge.
+GND connection is offset by one position so it will be at a slight
+angle relative to the other pins which are straight across.
+Insulation is not needed here, but the use of trimmed header pins is
+recommended if you didn't permanently affix the boards with glue.  The
+rigid pins help hold the boards together and reduce the chance of
+breaking solder connections on the first edge.
 
 <img src="images/solder_edge2.jpg" width="720px">
 
