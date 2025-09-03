@@ -218,6 +218,8 @@ Download and install the
 [latest version](https://github.com/adafruit/Adafruit_nRF52_Bootloader/releases/latest)
 of the update nice nano bootloader,
 e.g., `update-nice_nano_bootloader-0.9.2_nosd.uf2`.
+If you may later want to use OTA firmware updates, flash the bootloader
+included [here](update-promicro_nrf52840_bootloader-0.9.2-otafix1_nosd.uf2) instead.
 
 Note that since there is no reset
 button, you need to carefully and briefly short the RST and GND pads
@@ -273,13 +275,19 @@ last eight pads on each board are directly opposite, but not quite touching.
 so the NRF board should overhang the E22 enough that you can
 see the entirety of each pad on the bottom of the NRF board.
 
-Hold, very gently clamp, temporarily tape, or glue the boards in this position.
+Hold, very gently clamp using rubber bumpers, temporarily tape, or
+glue the boards in this position.
 
 If you position the boards carefully, with ~.1mm gap between the inner
 edges of the pads on the NRF and the castellated edge of the E22, you can
 make the connections with solder bridges and still easily unsolder them to
 separate the boards later in case you brick it and need to access the
 programming pads on the bottom.
+
+If you are manually holding the boards in place, it helps to apply
+solder to a central pad on both boards before you position them so you
+can make the first connection with out needing a third hand.  After
+that, you can set the boards down to finish the other six connections.
 
 <img src="images/clamp_boards.jpg" width="720px">
 
@@ -329,10 +337,10 @@ breaking solder connections on the first edge.
 Lastly, we need to power the E22; Solder a short length of insulated wire from
 VCC on the E22 to the B+ or RAW pad.
 
-> ⚠️ **Warning:** Never power up the E22 without an antenna or 50-ohm load
-connected, or it may be damaged.  And never set SX126X_MAX_POWER define
-to more than 8 when building firmware for the E22 900M33S, or it will
-be damaged.
+> ⚠️ **Warning:** Never connect USB or power up the E22 without an
+antenna or 50-ohm load connected, or it may be damaged.  And never set
+SX126X_MAX_POWER define to more than 8 when building firmware for the
+E22 900M33S, or it will be damaged.
 
 <img src="images/e22_power.jpg" width="720px">
 
@@ -511,7 +519,7 @@ fully charged.
 <img src="images/charging.jpg" width="720px">
 
 When running from battery power, the red LED will periodically flash
-very briefly and will flash longer when transmitting.  When running
+very briefly.  When running
 from USB power, the red LED will flash every 2 seconds.
 
 ## Acknowledgments:

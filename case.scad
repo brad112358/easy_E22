@@ -7,16 +7,16 @@
 */
 $fn = 50; // Change default faces to something reasonable
 top=0.0;
-thick=5; // The walls are thick/2 thick // Bug: other numbers still depend on this
-ledge=3; // depth of ledge // increasing this is likely to interfere with holes
-diameter=4; // Bug
-lid_d=2.5;
-ledge_off=lid_d/2+0.3; // increase for tighter lid
+thick=4; // The walls are thick/2 thick.  Bug: other numbers may depend on this
+diameter=4; // diameter of curved corners.  Bug: other things may depend on this
+lid_d=2.5; // diameter of cover snap curve
+ledge=lid_d+.1; // depth of ledge // increasing this is likely to interfere with holes
+ledge_off=lid_d/6; // decrease for tighter lid
 box_x=102;
 box_y=27;
-box_z=11.3; // 9 minimum for SMA
-stay_drop=7.0; // Bug: needs to depend on box_z
-pipe_length=5; // Bug: needs to depend on box_z
+box_z=11.8; // Battery + sma coax thickness
+stay_height=4.2; // height of E22 with tape
+pipe_length=box_z - 6.8; // MCU LED light pipe
 ant_x=19 + diameter;
 ant_y=12;
 mount_y=49.2;
@@ -30,7 +30,7 @@ switch_loc=1;
 usb_h=3.8;
 usb_l=2.0;
 usb_w=9.4;
-usb_x=-4.85;
+usb_x=-5.1;
 usb_z=5.68;
 module bottom(extra=0) {
     difference () {
@@ -48,12 +48,12 @@ module bottom(extra=0) {
         translate([0,0,box_z-top]) cube([(box_x+thick+diameter+ant_x)*2,box_y+thick+diameter*2+1,box_z],center = true);
 
         // cut out ledge for snap lid
-        translate([0,0,box_z/2-top-ledge_off]) {
+        translate([0,0,box_z/2-top-ledge/2+ledge_off]) {
             minkowski() {
                 union() {
-                    cube([box_x+thick/2-lid_d,box_y+thick/2-lid_d,ledge-lid_d+.75],center = true);
+                    cube([box_x+thick/2-lid_d,box_y+thick/2-lid_d,ledge-lid_d],center = true);
                     translate([(box_x+(ant_x - diameter))/2,(box_y-ant_y)/2,0])
-                    cube([ant_x+thick/2-lid_d,ant_y+thick/2-lid_d,ledge-lid_d+.75],center = true);
+                    cube([ant_x+thick/2-lid_d,ant_y+thick/2-lid_d,ledge-lid_d],center = true);
                 }
                 sphere(d=lid_d);
             }
@@ -85,7 +85,7 @@ module top() {
             bottom(extra=1);
 
             // chopp off bottom
-            #translate([0,0,-top-ledge-.2]) cube([(box_x+thick+diameter+ant_x)*2,box_y+thick+diameter+1,box_z],center = true);
+            translate([0,0,-top-ledge+ledge_off]) cube([(box_x+thick+diameter+ant_x)*2,box_y+thick+diameter+1,box_z],center = true);
 
             // hollow inside
             union() {
@@ -95,26 +95,31 @@ module top() {
             }
 
             // led holes
-            translate([-box_x/2 + 8, box_y/2 - 3.5, box_z/2])
+            translate([-box_x/2 + 8.5, box_y/2 - 3.5, box_z/2])
                 #cylinder(thick-.4, d=3, center=true);
-                translate([-box_x/2 + 8, -.5, box_z/2])
+            translate([-box_x/2 + 8.5, box_y/2 -14.5, box_z/2])
                 #cylinder(thick-.4, d=3, center=true);
+            translate([-box_x/2 + 25.5, box_y/2 - 13.8, box_z/2])
+                #cylinder(thick-.4, d=3, center=true);
+            // space for GPS
+            translate([-box_x/2 + 18, box_y/2 - 13, box_z/2+thick/4-1.5])
+                #cube ([14,9,thick/2], center=true);
                 }
         // led light guides
         difference () {
-            translate([-box_x/2 + 8, box_y/2 - 3.5, box_z/2-2])
+            translate([-box_x/2 + 8.5, box_y/2 - 3.5, box_z/2-pipe_length/2])
                 cylinder(pipe_length, d=4, center=true);
-            translate([-box_x/2 + 8, box_y/2 - 3.5, box_z/2-2-.001])
+            translate([-box_x/2 + 8.5, box_y/2 - 3.5, box_z/2-pipe_length/2-.001])
                 #cylinder(pipe_length, d=3, center=true);
                 }
         difference () {
-            translate([-box_x/2 + 8, -.5, box_z/2-2])
+            translate([-box_x/2 + 8.5, box_y/2 - 14.5, box_z/2-pipe_length/2])
                 cylinder(pipe_length, d=4, center=true);
-            translate([-box_x/2 + 8, -.5, box_z/2-2-.001])
+            translate([-box_x/2 + 8.5, box_y/2 - 14.5, box_z/2-pipe_length/2-.001])
                 #cylinder(pipe_length, d=3, center=true);
                 }
         // stay to keep boards in place
-        translate([-15, 0, box_z/2 - stay_drop/2]) cube([2, box_y/3, stay_drop], center=true);
+        translate([-15, 0, stay_height/2-0.001]) cube([2, box_y/3, box_z-stay_height], center=true);
     }
 }
 module usb() {
@@ -139,14 +144,13 @@ module ufl_stay() {
 }
 
 module sma() {
-    translate([(box_x+diameter)/2 + (ant_x-diameter) - sma_d/2-1.5, box_y/2 - ant_y-1.5, -1])
+    translate([(box_x+diameter)/2 + (ant_x-diameter) - sma_d/2-1.5, box_y/2 - ant_y-1, -1])
         rotate([110,0,0])
-        cylinder(thick+1, d=sma_d, center=true);
+        cylinder(thick+3, d=sma_d, center=true);
 }
 
 module sw() {
     translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y, -0.5])
-        //translate([box_x/2+.001, -box_y/2+switch_d/2+switch_loc, -0.5])
         rotate([0,-90,0])
         {
             difference() {
@@ -158,11 +162,10 @@ module sw() {
 }
 
 module sw_hole() {
-    translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y+1.5, +0.5])
-    //translate([box_x/2-switch_loc-.001, -box_y/2+thick/2, -0.5])
+    translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y+2, +0.5])
         rotate([110,0,0])
         {
-                cylinder(thick+2, d=switch_hole);
+                cylinder(thick+3, d=switch_hole);
         }
 }
 
@@ -175,9 +178,10 @@ module case() {
     }
     mount();
     ufl_stay();
-    translate([box_x/3,-box_y/2-thick/2+.001,box_z/2-lid_d]) rotate ([90,180,0]) linear_extrude(.25) text ("Meshtastic", size=8);
+    // Needs work when box size is changed
+    translate([-box_x/4,-box_y/2-thick/2+.001,-box_z/2+lid_d]) rotate ([90,0,0]) linear_extrude(.25) text ("Meshtastic", size=8);
     translate([-box_x/2-thick/2+0.001,-.8,0]) rotate ([90,0,-90]) linear_extrude(.3) text ("ANT", size=4.9);
-    translate([-box_x/2-thick/2+0.001,.5,-box_z/2]) rotate ([90,0,-90]) linear_extrude(.3) text ("First!", size=4.9);
+    translate([-box_x/2-thick/2+0.001,-.5,-box_z/2]) rotate ([90,0,-90]) linear_extrude(.3) text ("First", size=4.9);
     //sw();
 }
 
@@ -209,7 +213,7 @@ module term_switch_lock() {
   Uncomment the parts you want to print below.
   The translations move things to avoid overlap allign bottoms.
  */
-case();
-translate([0,-box_y-thick-4,0]) top();
+//case();
+//translate([0,-box_y-thick-4,0]) top();
 translate ([box_x/2+ant_x/2+thick,-box_y/2-thick, -box_z/2-thick/2+height/2]) switch_lock();
 //translate ([-box_x/2-diameter*2-thick-2,-box_y/2-thick, -box_z/2-thick/2+height/2]) term_switch_lock();
