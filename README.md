@@ -481,8 +481,8 @@ and GND pads from the NRF52840 module to the GPS module as shown.
 <img src="images/gps_complete.jpg" width="720px">
 
 Insulate the GPS antenna with tape and connect the U.FL.  Position it
-as far away from the other boards as possible so that it faces up and
-away from obstructions.
+in the case as far away from the other boards as possible so that it
+faces up and away from obstructions.
 
 ### 19. Assemble case
 
