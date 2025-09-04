@@ -9,12 +9,13 @@ basic but powerful DIY Meshtastic node with the following features:
 - ~2 watt maximum output on USB power
 - Based on two easy-to-obtain COTS modules
 - Relatively easy assembly and soldering with no custom PCB required
+- Optional GPS
 
 The castellated edge connections on the E22 module, along with the pin
 assignment flexibility of the NRF52 MCU, allow most signals to pass
 between boards with no wiring.  Just careful positioning, a little
 solder, and three header pins connect all signals.  Point-to-point
-wiring is used only for battery power.
+wiring is used only for power.
 
 The E22 gives this node outstanding performance in a compact package.
 The hinged and swiveling antenna matches the physical design of the
@@ -42,9 +43,7 @@ as this is not an introduction to Meshtastic.
 
 Note: Product links are examples of components with the required
 specifications and do not imply a recommendation of a specific part or
-supplier.
-
-These are not affiliate links.
+supplier.  These are not affiliate links.
 
 - "Pro Micro compatible" NRF52840 dev module
 
@@ -127,6 +126,13 @@ These are not affiliate links.
     [Stuff](https://www.amazon.com/ELEGOO-Polyimide-Temperature-Resistant-Multi-Sized/dp/B072Z92QZ2).
     Often called Kapton tape.
 
+- Optional low power GPS module
+
+    GPS modules only need power, ground, and two serial connections.
+    [This one](https://www.amazon.com/dp/B09LQDG1HY) is relatively low
+    power, fits well and has a small active antenna which can be placed a
+    a short distance from the other boards to reduce RF noise.
+    
 ## E22 connections to NRF52 module
 
 | E22 Pin Number | E22 Signal | NRF52 Pin | Method        |
@@ -173,9 +179,8 @@ These are not affiliate links.
 | P1.04 | SDA         |
 | P1.06 | SCL         |
 |       |             |
-| P1.01 | GPS_TX      |
-| P1.02 | GPS_RX      |
-| P1.07 | GPS_EN      |
+| P1.02 | GPS RX      |
+| P1.07 | GPS_TX      |
 
 ## Build procedure
 
@@ -255,12 +260,12 @@ boards is recommended to avoid any chance of shorting exposed vias.
 Leave the E22 pads on the edge with VCC exposed, but cover the back
 surface of the pads on the other edge.
 
-Cover the
-entire pin 12 GND pad next to DI01 on the E22 to avoid any chance of shorts
-when the resistors are later installed.
-
 <img src="images/tape_nrf.jpg" width="720px">
 <img src="images/trim_tape.jpg" width="720px">
+
+Cover the entire pin 12 GND pad next to DI01 on the E22 to avoid any
+chance of shorts when the resistors are later installed.
+
 <img src="images/tape_e22.jpg" width="720px">
 
 ### 5. Align and very gently clamp boards
@@ -443,7 +448,42 @@ Arrange wires and place the battery in the case.
 
 <img src="images/install_bat.jpg" width="720px">
 
-### 18. Assemble case
+### 18. Optional GPS
+
+When used with a mobile device, no GPS is needed as the mobile device
+can be configured to provide it's location.  If, however, you want to use
+this node as a tracker, a GPS can easily be added.
+
+The NRF52840 dev module includes a switched 3.3V power output which we
+take advantage of to extend battery life by powering the GPS module
+only when needed.  When the GPS is enabled, battery life will be
+reduced, especially inside buildings where a fix is harder to obtain.
+You can still expect the battery recommended here to last a full day.
+
+If you use the recommended GPS module or one with the same form factor
+and pin out, you can connect the Rx and Tx pads via header pins and use
+wires only for power and ground.  If you use a different GPS module,
+be sure to connect Rx to Tx and Tx to Rx.
+
+First, solder two header pins, long side down to the P1.02 and P1.07
+thru holes on the NRF52840 module and then remove the plastic spacers.
+
+<img src="images/gps_pins_trim.jpg" width="720px">
+
+Trim the pins to fit the GPS module and place it on the pins with it's
+metal shield flat against the NRF chip as shown.
+
+<img src="images/gps_wires.jpg" width="720px">
+
+Solder the GPS module in place and solder wires to connect the 3.3V
+and GND pads from the NRF52840 module to the GPS module as shown.
+
+<img src="images/gps_complete.jpg" width="720px">
+
+Connect the GPS antenna and position it so that it faces up or away
+from obstructions and as far away from the other boards as possible.
+
+### 19. Assemble case
 
 If you haven't already, slide the board assembly fully into place in
 with the USB connector level and inserted into the USB hole.
