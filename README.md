@@ -186,9 +186,6 @@ supplier.  These are not affiliate links.
 
 Instead of a custom PCB, the castellated edge of the E22 module
 is soldered on the insulated back of the NRF52 module.
-Temporary gluing, taping, or
-gentle clamping (use a small vise with rubber bumpers) will help
-with soldering.
 Construction time may be 2-4 hours.
 
 When soldering the castellated edge, be sure *not* to solder
@@ -231,8 +228,8 @@ button, you need to carefully and briefly short the RST and GND pads
 twice within 1/2 second to activate bootloader mode.  Be sure you short
 only the correct pins, 3rd and 4th from the end.
 Small tweezers work well.
-It may take a few tries; look for the slow "breathing"
-red LED to show success.
+It may take a few tries; look for the red LED to remain off or slow "breathing"
+to show success.
 
 Once the bootloader is installed, you can use the same method to
 install the Meshtastic firmware.  Note, this node is not yet supported
@@ -280,8 +277,7 @@ last eight pads on each board are directly opposite, but not quite touching.
 so the NRF board should overhang the E22 enough that you can
 see the entirety of each pad on the bottom of the NRF board.
 
-Hold, very gently clamp using rubber bumpers, temporarily tape, or
-glue the boards in this position.
+Hold or very gently clamp using rubber bumpers the boards in this position.
 
 If you position the boards carefully, with ~.1mm gap between the inner
 edges of the pads on the NRF and the castellated edge of the E22, you can
@@ -331,16 +327,15 @@ RXEN to P0.11, from TXEN to P1.00, and from GND to GND.  Notice the
 GND connection is offset by one position so it will be at a slight
 angle relative to the other pins which are straight across.
 Insulation is not needed here, but the use of trimmed header pins is
-recommended if you didn't permanently affix the boards with glue.  The
-rigid pins help hold the boards together and reduce the chance of
-breaking solder connections on the first edge.
+recommended.  The rigid pins help hold the boards together and reduce
+the chance of breaking solder connections on the first edge.
 
 <img src="images/solder_edge2.jpg" width="720px">
 
 ### 10. Solder power wire
 
-Lastly, we need to power the E22; Solder a short length of insulated wire from
-VCC on the E22 to the B+ or RAW pad.
+Next, we need to connect the E22 VCC; Solder a short length of
+insulated wire from VCC on the E22 to the B+ or RAW pad.
 
 > ⚠️ **Warning:** Never connect USB or power up the E22 without an
 antenna or 50-ohm load connected, or it may be damaged.  And never set
@@ -354,11 +349,21 @@ E22 900M33S, or it will be damaged.
 Use a continuity tester to carefully check each soldered connection
 and also check for any unintended shorts between adjacent pads.
 
+Test fit the board in the case with the USB connector level and
+inserted into the USB hole.  Then, gently press the boards down to
+seat the edge of the E22 RF shield against the wall in the middle of
+the case so it can't slide away from the USB hole.  If the USB
+connector won't fit the hole because of filament sag, carefully trim
+to fit.  If the boards won't easily fit down against the wall so that
+the RF shield is flat against the bottom of the case,
+carefully remove some material from the wall with a sharp knife or
+file.  If the USB connector is not held firmly in place in the USB
+hole, add a layer or two of tape to the wall.
+
 ### 12. Wire battery switch
 
-Clip the longer middle terminal of the battery switch so it is a bit shorter than
-the other two terminals, and test fit it in the case. You probably need to trim
-the other terminals a bit as well.
+Clip all three terminals of the battery switch so they are a bit shorter than
+the original length of the outside two terminals, and test fit it in the case.
 
 Solder wires to the two farthest terminals, closest to the SMA.
 
@@ -480,23 +485,17 @@ and GND pads from the NRF52840 module to the GPS module as shown.
 
 <img src="images/gps_complete.jpg" width="720px">
 
-Insulate the GPS antenna with tape and connect the U.FL.  Position it
-in the case as far away from the other boards as possible so that it
-faces up and away from obstructions.
+Insulate the back of the GPS antenna with tape and connect the U.FL.
+Position it in the case as far away from the other boards as possible
+so that it faces up and away from obstructions.
 
 ### 19. Assemble case
 
-If you haven't already, slide the board assembly fully into place in
-with the USB connector level and inserted into the USB hole.
-Then, gently press the boards down to seat the edge of the E22 RF
-shield against the wall in the middle of the case so it can't slide
-away from the USB hole.  If the USB connector won't fit the hole
-because of filament sag, carefully trim to fit.
+If you haven't already, slide the board assembly fully into place.
 
 Carefully install the case lid, taking care not to pinch wires.  You
-may want to use some heat-resistant tape to keep the longer wires in
-place at the side of the case, away from the protruding parts of the
-lid.
+may want to use some tape to keep the longer wires in place at the
+side of the case, away from the protruding parts of the lid.
 
 <img src="images/assemble_case.jpg" width="720px">
 
@@ -553,9 +552,9 @@ minimum of 3.0 volts.  To avoid damaging your battery or reducing its
 service life, it is recommended to monitor the battery voltage and
 turn off or charge your node before the battery is exhausted.
 
-When charging, the blue LED will remain lit until the battery is about
-80% charged. Then it will cycle on and off at various intervals until
-fully charged.
+When charging, the blue LED will remain lit until the battery is 80-90%
+charged. Then it will cycle on and off at various intervals while the
+charge is completed and maintained.
 
 <img src="images/charging.jpg" width="720px">
 

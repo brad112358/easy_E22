@@ -9,8 +9,10 @@ $fn = 50; // Change default faces to something reasonable
 top=0.0;
 thick=4; // The walls are thick/2 thick.  Bug: other numbers may depend on this
 diameter=4; // diameter of curved corners.  Bug: other things may depend on this
-lid_d=2.5; // diameter of cover snap curve
-ledge=lid_d+.1; // depth of ledge // increasing this is likely to interfere with holes
+extra_tight=.1; // must be > 0; increase for tighter lid
+// increasing these next two very much is likely to interfere with holes
+lid_d=3; // diameter of cover snap curve; increase for tighter lid
+ledge=lid_d+.1; // depth of ledge
 ledge_off=lid_d/6; // decrease for tighter lid
 box_x=102;
 box_y=27;
@@ -19,14 +21,14 @@ stay_height=4.2; // height of E22 with tape
 pipe_length=box_z - 6.8; // MCU LED light pipe
 ant_x=19 + diameter;
 ant_y=12;
-mount_y=49.2;
+mount_y=49.5;
 mount_w=2.5;
 mount_h=2.75;
 sma_d=7.2;
 switch_l=18;
 switch_d=7;
-switch_hole=5.7;
-switch_loc=1;
+switch_hole=5.6;
+switch_loc=.5;
 usb_h=3.8;
 usb_l=2.0;
 usb_w=9.4;
@@ -51,9 +53,9 @@ module bottom(extra=0) {
         translate([0,0,box_z/2-top-ledge/2+ledge_off]) {
             minkowski() {
                 union() {
-                    cube([box_x+thick/2-lid_d,box_y+thick/2-lid_d,ledge-lid_d],center = true);
+                    cube([box_x+thick/2-lid_d+extra,box_y+thick/2-lid_d+extra,ledge-lid_d],center = true);
                     translate([(box_x+(ant_x - diameter))/2,(box_y-ant_y)/2,0])
-                    cube([ant_x+thick/2-lid_d,ant_y+thick/2-lid_d,ledge-lid_d],center = true);
+                    cube([ant_x+thick/2-lid_d+extra,ant_y+thick/2-lid_d+extra,ledge-lid_d],center = true);
                 }
                 sphere(d=lid_d);
             }
@@ -82,7 +84,7 @@ module top() {
             }
 
             // reverse ledge
-            bottom(extra=1);
+            bottom(extra=extra_tight);
 
             // chopp off bottom
             translate([0,0,-top-ledge+ledge_off]) cube([(box_x+thick+diameter+ant_x)*2,box_y+thick+diameter+1,box_z],center = true);
@@ -131,9 +133,10 @@ module usb() {
     }
 }
 
+// Wall to hold boards in place against USB hole
 module mount() {
     translate([mount_w/2+mount_y-box_x/2, 0,-box_z/2+mount_h/2-.01]) {
-        cube([mount_w, box_y/2, mount_h], center=true);
+        cube([mount_w, box_y/3, mount_h], center=true);
     }
 }
 
@@ -145,27 +148,15 @@ module ufl_stay() {
 
 module sma() {
     translate([(box_x+diameter)/2 + (ant_x-diameter) - sma_d/2-1.5, box_y/2 - ant_y-1, -1])
-        rotate([110,0,0])
-        cylinder(thick+3, d=sma_d, center=true);
-}
-
-module sw() {
-    translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y, -0.5])
-        rotate([0,-90,0])
-        {
-            difference() {
-                cylinder(switch_l+thick, d=switch_d+thick);
-                translate([0,0,-.001]) cylinder(switch_l, d=switch_d);
-                translate([0,0,switch_l-.002]) cylinder(thick+1, d=switch_hole);
-            }
-        }
+        rotate([120,0,0])
+        cylinder(thick+4, d=sma_d, center=true);
 }
 
 module sw_hole() {
-    translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y+2, +0.5])
-        rotate([110,0,0])
+    translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y+2, +1.5])
+        rotate([120,0,0])
         {
-                cylinder(thick+3, d=switch_hole);
+                cylinder(thick+4, d=switch_hole);
         }
 }
 
@@ -182,7 +173,6 @@ module case() {
     translate([-box_x/4,-box_y/2-thick/2+.001,-box_z/2+lid_d]) rotate ([90,0,0]) linear_extrude(.25) text ("Meshtastic", size=8);
     translate([-box_x/2-thick/2+0.001,-.8,0]) rotate ([90,0,-90]) linear_extrude(.3) text ("ANT", size=4.9);
     translate([-box_x/2-thick/2+0.001,-.5,-box_z/2]) rotate ([90,0,-90]) linear_extrude(.3) text ("First", size=4.9);
-    //sw();
 }
 
 use <threads.scad>;
@@ -214,6 +204,6 @@ module term_switch_lock() {
   The translations move things to avoid overlap allign bottoms.
  */
 //case();
-//translate([0,-box_y-thick-4,0]) top();
-translate ([box_x/2+ant_x/2+thick,-box_y/2-thick, -box_z/2-thick/2+height/2]) switch_lock();
+translate([0,-box_y-thick-4,0]) top();
+//translate ([box_x/2+ant_x/2+thick,-box_y/2-thick, -box_z/2-thick/2+height/2]) switch_lock();
 //translate ([-box_x/2-diameter*2-thick-2,-box_y/2-thick, -box_z/2-thick/2+height/2]) term_switch_lock();
