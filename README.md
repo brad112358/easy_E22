@@ -558,9 +558,12 @@ charge is completed and maintained.
 
 <img src="images/charging.jpg" width="720px">
 
-When running from battery power, the red LED will periodically flash
-very briefly.  When running
-from USB power, the red LED will flash every 2 seconds.
+When running from battery power, the red LED closest to the USB
+connector will periodically flash very briefly.  When running from USB
+power, it will flash every 2 seconds.
+
+If you installed and enabled the GPS, its LED will light while looking for a fix and
+then flash when a fix is obtained and go out when when idle.
 
 ## Acknowledgments:
 
