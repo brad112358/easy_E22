@@ -7,16 +7,18 @@
 */
 $fn = 50; // Change default faces to something reasonable
 top=0.0;
-thick=4; // The walls are thick/2 thick.  Bug: other numbers may depend on this
+thick=5; // The walls are thick/2 thick; 4-5 works well
 diameter=4; // diameter of curved corners.  Bug: other things may depend on this
 extra_tight=.1; // must be > 0; increase for tighter lid
 // increasing these next two very much is likely to interfere with holes
 lid_d=3; // diameter of cover snap curve; increase for tighter lid
 ledge=lid_d+.1; // depth of ledge
 ledge_off=lid_d/6; // decrease for tighter lid
-box_x=102;
+//box_x=102; // 1000 mAh cell
+//box_z=11.8; // battery + sma coax thickness  // 1000 mAh cell
+box_x=127; // 21700 protected battery
+box_z=21.8; // battery thickness  // 1000 mAh cell
 box_y=27;
-box_z=11.8; // Battery + sma coax thickness
 stay_height=4.2; // height of E22 with tape
 pipe_length=box_z - 6.8; // MCU LED light pipe
 ant_x=19 + diameter;
@@ -104,6 +106,7 @@ module top() {
             translate([-box_x/2 + 25.5, box_y/2 - 13.8, box_z/2])
                 #cylinder(thick-.4, d=3, center=true);
             // space for GPS
+            if (box_z < 13)
             translate([-box_x/2 + 18, box_y/2 - 13, box_z/2+thick/4-1.5])
                 #cube ([14,9,thick/2], center=true);
                 }
@@ -147,13 +150,13 @@ module ufl_stay() {
 }
 
 module sma() {
-    translate([(box_x+diameter)/2 + (ant_x-diameter) - sma_d/2-1.5, box_y/2 - ant_y-1, -1])
+    translate([(box_x+diameter)/2 + (ant_x-diameter) - sma_d/2-1.5, box_y/2 - ant_y-1, -1+(box_z-11.8)/2])
         rotate([120,0,0])
         cylinder(thick+4, d=sma_d, center=true);
 }
 
 module sw_hole() {
-    translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y+2, +1.5])
+    translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y+2, +1.5+(box_z-11.8)/2])
         rotate([120,0,0])
         {
                 cylinder(thick+4, d=switch_hole);
@@ -201,9 +204,9 @@ module term_switch_lock() {
 
 /*
   Uncomment the parts you want to print below.
-  The translations move things to avoid overlap allign bottoms.
+  The translations move things to avoid overlap and allign bottoms.
  */
-//case();
+case();
 translate([0,-box_y-thick-4,0]) top();
 //translate ([box_x/2+ant_x/2+thick,-box_y/2-thick, -box_z/2-thick/2+height/2]) switch_lock();
 //translate ([-box_x/2-diameter*2-thick-2,-box_y/2-thick, -box_z/2-thick/2+height/2]) term_switch_lock();

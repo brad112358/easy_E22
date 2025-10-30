@@ -316,7 +316,10 @@ board.
 ### 8. Optional capacitor
 
 To reduce power supply noise, you can also solder a ceramic SMD
-capacitor between the VCC and GND pads on the E22.
+capacitor between the VCC and GND pads on the E22.  Note that while
+this is best practice in general and the E22 data sheet recommends
+filter capacitors, it does not specify a required value and it is
+probably OK to leave this out.
 
 <img src="images/solder_capacitor.jpg" width="720px">
 
