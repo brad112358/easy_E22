@@ -114,7 +114,7 @@ supplier.  These are not affiliate links.
     1% recommended, but up to 10% will work.
     You may need to adjust the ADC multiplier override ratio for
     accurate battery voltage readings, especially if you don't use 1%
-    tolerance or choose a high higher resistance than recommended.
+    tolerance or choose a higher resistance than recommended.
 
 - Common 2.54 mm pin header
 
