@@ -569,6 +569,18 @@ If you installed and enabled the GPS, its LED will light while looking
 for a fix.  It will flash at 1 Hz when a fix is obtained and turn off
 when when idle.
 
+## Technical notes:
+
+This style of construction can also be used in a solar node.  The E22
+ground plane does reduce the Bluetooth range and makes it more
+directional which is usually not a problem for a pocket node, but if
+you need to update a solar node OTA, you may want to remove the red
+chip antenna and solder the coax to an external antenna in it's place.
+Note that the second pad which the chip antenna is soldered too is not
+a ground, so you will need to find another ground, perhaps by
+carefully removing some solder mask from the ground plane in a
+convenient location.
+
 ## Acknowledgments:
 
 A big thank-you to Bob Van Valzah for testing the node and reviewing
