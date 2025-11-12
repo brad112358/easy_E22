@@ -4,7 +4,7 @@ This project provides build instructions and 3D print files for a
 basic but powerful DIY Meshtastic node with the following features:
 
 - Pocket sized
-- Battery powered, 40+ hour run time
+- Battery powered, 40+ hour run time (Up to a week with 18650 version)
 - ~1 watt maximum output on internal battery power
 - ~2 watt maximum output on USB power
 - Based on two easy-to-obtain COTS modules
