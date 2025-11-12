@@ -197,9 +197,12 @@ Strip and tin each wire before soldering it in place.
 
 ### 1. 3D print or obtain a case
 
-The OpenSCAD source and STL files are included here.  If you don't
-have a 3D printer or a friend with one, some public libraries have
-one.  There are also companies that sell this service.
+The OpenSCAD source and STL files are included here.  Print the
+case_18650.stl version if you plan to use a protected 18650 cell,
+otherwise, use the case.stl file.  The OpenSCAD source is included if
+you want to modify the case.  If you don't have a 3D printer or a
+friend with one, some public libraries have one.  There are also
+companies that sell this service.
 
 PLA works fine.  Use your highest quality settings.  Supports should
 not be required.  Test fit the cover after printing.  It should snap
@@ -394,11 +397,11 @@ connected or it may be damaged.
 <img src="images/connect_antenna.jpg" width="720px">
 
 
-### 15. Connect battery switch and battery wires
-
 As you make the remaining connections, place the boards and battery switch in
 position and trim wires close to the required length so they will fit
 neatly in the case.
+
+### 15. Connect battery switch and battery wires
 
 Solder the wire on the battery switch terminal closest to the SMA to
 one of the LDO terminals, which are connected to the USB VBUS pads
@@ -425,10 +428,37 @@ battery to be removable.
 
 <img src="images/jack.jpg" width="720px">
 
+#### If you will power your node from a LiPo cell
+
 Connect the remaining (closest) battery switch terminal to the positive (red) battery lead
 or the correct battery jack wire.
 
 <img src="images/switch_bat.jpg" width="720px">
+
+#### If you will power your node from a protected 18650 Li-Ion cell:
+
+Fashion 2 battery holder contact pads from a thin piece of shiny metal
+which will take solder.  I cut small pieces of .2mm nickel battery
+welding strip, but a piece cut from the lid of a tin can might also
+work.
+
+Once you determine where the contact pads will be mounted, test
+fit the pads with the battery.  Solder wire to each contact pad in a location
+where it will not get caught when the battery is installed.  You
+can use double sided adhesive foam mounting tape to mount the battery contact pads in
+the battery holder section of the case.
+
+If the battery does not fit snugly, add a second layer of mounting
+tape.  If the battery does not make solid electrical contact at the
+negative contact, you can add a bit of solder to create a bump near
+the middle.
+
+<img src="images/18650_negative.jpg" width="720px">
+
+Connect the remaining (closest) battery switch terminal to the
+positive contact pad at the switch end of the case.
+
+<img src="images/18650_positive.jpg" width="720px">
 
 ### 16. Install battery switch
 
@@ -446,7 +476,7 @@ powered on when the switch is off if USB power is connected.
 Check that the battery switch is in the off position and that the antenna and
 U.FL are still connected.
 
-Solder the negative (black) lead of the battery or jack wire to a GND
+Solder the negative (black) lead of the battery, contact, or jack wire to a GND
 pad.
 
 <img src="images/bat_gnd.jpg" width="720px">
@@ -540,11 +570,12 @@ antenna connected, connect a 50-ohm load.
 <img src="images/switch_lock.jpg" width="720px">
 
 When operating on battery power, the voltage supplied to the E22
-module is between 4.2 and 3.0 volts, and for most of that range, it will
-output a maximum of about 1 watt.
+module is between 4.2 and 3.0 volts.  The maximum output power of the
+E22-900M33S will vary from about 1.2W to about 0.5W as the battery
+voltage drops.
 
 When operating on 5-volt USB power with the battery switch off, the E22 is
-capable of about 2 watts of output power.  The Meshtastic firmware
+capable of a maximum output power of about 2 watts.  The Meshtastic firmware
 variant `diy/easy-nrf-pro-micro_e22` is configured to expect battery
 voltage, thus, when powered via 5-volt USB, configuring the node for 30 dBm
 (1 watt) output should produce about 33 dBm (2 watts).
@@ -576,10 +607,15 @@ ground plane does reduce the Bluetooth range and makes it more
 directional which is usually not a problem for a pocket node, but if
 you need to update a solar node OTA, you may want to remove the red
 chip antenna and solder the coax to an external antenna in it's place.
-Note that the second pad which the chip antenna is soldered too is not
+Note that the second pad which the chip antenna is soldered to is not
 a ground, so you will need to find another ground, perhaps by
 carefully removing some solder mask from the ground plane in a
 convenient location.
+
+When used with a solar power manager which provides a 2 amp 5 volt
+regulated output, you can connect it to the B+ pad.  In thsi case wire
+the resistor voltage divider to the lithium battery positive terminal
+instead of the B+ pad.
 
 ## Acknowledgments:
 

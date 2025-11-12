@@ -7,22 +7,21 @@
 */
 $fn = 50; // Change default faces to something reasonable
 top=0.0;
-thick=5; // The walls are thick/2 thick; 4-5 works well
+thick=5; // The case walls are thick/2 thick; 4..5 works well
 diameter=4; // diameter of curved corners.  Bug: other things may depend on this
 extra_tight=.1; // must be > 0; increase for tighter lid
 // increasing these next two very much is likely to interfere with holes
 lid_d=3; // diameter of cover snap curve; increase for tighter lid
 ledge=lid_d+.1; // depth of ledge
 ledge_off=lid_d/6; // decrease for tighter lid
-box_x=102; // 1000 mAh cell
-box_z=11.8; // battery + sma coax thickness  // 1000 mAh cell
+box_l=102; // 1000 mAh cell
 box_y=27;
+box_h=11.8; // lipo battery + sma coax thickness  // 1000 mAh cell
 stay_height=4.2; // height of E22 with tape
-pipe_length=box_z - 6.8; // MCU LED light pipe
 ant_x=19 + diameter;
-ant_y=12;
-mount_y=49.5;
-mount_w=2.5;
+ant_y=11;
+mount_x=49.5;
+mount_w=2.0;
 mount_h=2.75;
 sma_d=7.2;
 switch_l=18;
@@ -33,7 +32,20 @@ usb_h=3.8;
 usb_l=2.0;
 usb_w=9.4;
 usb_x=-5.1;
-usb_z=5.68;
+usb_z=5.9;
+//batt_l=48; // Lipo
+//batt_d=0; // Lipo
+batt_l=71; // 18650 with protection
+batt_d=19; // 18650 with protection
+box_x=mount_x+batt_l+mount_w+1.5;
+batt_x=mount_w/2+mount_x-box_x/2+mount_w/2+1.5;
+batt_y=-(box_y - batt_d)/2;
+batt_z=0;
+
+box_z = (batt_d - thick + 1 > box_h) ? batt_d - thick + 1 : box_h;
+
+pipe_length=box_z - 6.8; // MCU LED light pipe
+
 module bottom(extra=0) {
     difference () {
 
@@ -67,6 +79,14 @@ module bottom(extra=0) {
             translate([(box_x+(ant_x - diameter))/2,(box_y-ant_y)/2,0])
                 cube([ant_x+.001,ant_y,box_z+.001],center = true);
         }   
+        // battery space
+        if (batt_d > 15) { // 18650
+            translate([batt_x,batt_y,batt_z]) {
+                rotate([0,90,0])
+                    cylinder(batt_l, d=batt_d, center=false);
+            }
+        }
+
     }
 }
 
@@ -94,6 +114,13 @@ module top() {
                 cube([box_x,box_y,box_z],center = true);
                 translate([(box_x+(ant_x - diameter))/2,(box_y-ant_y)/2,0])
                 cube([ant_x+.002,ant_y+.002,box_z+.002],center = true);
+            }
+            // battery space
+            if (batt_d > 15) { // 18650
+                translate([batt_x,batt_y,batt_z]) {
+                    rotate([0,90,0])
+                        cylinder(batt_l, d=batt_d, center=false);
+                }
             }
 
             // led holes
@@ -134,15 +161,20 @@ module usb() {
     }
 }
 
-// Wall to hold boards in place against USB hole
+// Walls for battery and to hold boards in place against USB hole
 module mount() {
-    translate([mount_w/2+mount_y-box_x/2, 0,-box_z/2+mount_h/2-.01]) {
+    translate([mount_w/2+mount_x-box_x/2, 0,-box_z/2+mount_h/2-.01]) {
         cube([mount_w, box_y/3, mount_h], center=true);
+    }
+    if (batt_l > 65) {
+        translate([mount_w/2+mount_x-box_x/2+1.5, (batt_d-box_y)/2 -.01,-box_z/2+(box_z-lid_d)/2-.01]) {
+            cube([mount_w, batt_d, box_z-lid_d], center=true);
+        }
     }
 }
 
 module ufl_stay() {
-    translate([mount_w/2+mount_y-box_x/2-3, box_y/2-4,-box_z/2-.001]) {
+    translate([mount_w/2+mount_x-box_x/2-3, box_y/2-4,-box_z/2-.001]) {
         cube([4, 4, .65], center=true);
     }
 }
