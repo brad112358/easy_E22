@@ -14,37 +14,58 @@ extra_tight=.1; // must be > 0; increase for tighter lid
 lid_d=3; // diameter of cover snap curve; increase for tighter lid
 ledge=lid_d+.1; // depth of ledge
 ledge_off=lid_d/6; // decrease for tighter lid
-box_l=102; // 1000 mAh cell
-box_y=27;
 box_h=11.8; // lipo battery + sma coax thickness  // 1000 mAh cell
 stay_height=4.2; // height of E22 with tape
-ant_x=19 + diameter;
+ant_x=19.5 + diameter;
 ant_y=11;
 mount_x=49.5;
 mount_w=2.0;
 mount_h=2.75;
 sma_d=7.2;
-switch_l=18;
 switch_d=7;
 switch_hole=5.6;
-switch_loc=.5;
+switch_loc=1.0;
 usb_h=3.8;
 usb_l=2.0;
 usb_w=9.4;
 usb_x=-5.1;
 usb_z=5.9;
-//batt_l=48; // Lipo
-//batt_d=0; // Lipo
-batt_l=71; // 18650 with protection
-batt_d=19; // 18650 with protection
+boards_y=27;
+n_batt = 2; // Number of 18650 cells 0 for lipo, 1, or 2
+wires_x=(n_batt > 1) ? 7: 0;
+batt_l=(n_batt > 0) ? 71: 48;
+batt_d=(n_batt > 0) ? 18.75: 0;
+box_y=(n_batt > 1) ? batt_d * n_batt: 27;
 box_x=mount_x+batt_l+mount_w+1.5;
 batt_x=mount_w/2+mount_x-box_x/2+mount_w/2+1.5;
 batt_y=-(box_y - batt_d)/2;
 batt_z=0;
 
-box_z = (batt_d - thick + 1 > box_h) ? batt_d - thick + 1 : box_h;
+box_z = (n_batt > 0) ? batt_d - thick + 1 : box_h;
 
 pipe_length=box_z - 6.8; // MCU LED light pipe
+
+module inside() {
+        // hollow inside
+        translate([0,0,0]) {
+            cube([box_x,box_y,box_z],center = true);
+            translate([(box_x+(ant_x - diameter))/2,(box_y-ant_y)/2,0])
+                cube([ant_x+.001,ant_y,box_z+.001],center = true);
+        }   
+        // battery space
+        if (n_batt > 0) { // 18650
+            translate([batt_x,batt_y-(thick-2)/2,batt_z]) {
+                rotate([0,90,0])
+                    cylinder(batt_l, d=batt_d, center=false);
+            }
+        }
+        if (n_batt > 1) { // 18650
+            translate([batt_x,batt_y+batt_d-(thick-2)/2,batt_z]) {
+                rotate([0,90,0])
+                    cylinder(batt_l, d=batt_d, center=false);
+            }
+        }
+}
 
 module bottom(extra=0) {
     difference () {
@@ -72,21 +93,7 @@ module bottom(extra=0) {
                 sphere(d=lid_d);
             }
         }
-        
-        // hollow inside
-        translate([0,0,0]) {
-            cube([box_x,box_y,box_z],center = true);
-            translate([(box_x+(ant_x - diameter))/2,(box_y-ant_y)/2,0])
-                cube([ant_x+.001,ant_y,box_z+.001],center = true);
-        }   
-        // battery space
-        if (batt_d > 15) { // 18650
-            translate([batt_x,batt_y,batt_z]) {
-                rotate([0,90,0])
-                    cylinder(batt_l, d=batt_d, center=false);
-            }
-        }
-
+        inside();
     }
 }
 
@@ -109,19 +116,7 @@ module top() {
             // chopp off bottom
             translate([0,0,-top-ledge+ledge_off]) cube([(box_x+thick+diameter+ant_x)*2,box_y+thick+diameter+1,box_z],center = true);
 
-            // hollow inside
-            union() {
-                cube([box_x,box_y,box_z],center = true);
-                translate([(box_x+(ant_x - diameter))/2,(box_y-ant_y)/2,0])
-                cube([ant_x+.002,ant_y+.002,box_z+.002],center = true);
-            }
-            // battery space
-            if (batt_d > 15) { // 18650
-                translate([batt_x,batt_y,batt_z]) {
-                    rotate([0,90,0])
-                        cylinder(batt_l, d=batt_d, center=false);
-                }
-            }
+            inside();
 
             // led holes
             translate([-box_x/2 + 8.5, box_y/2 - 3.5, box_z/2])
@@ -149,7 +144,7 @@ module top() {
                 #cylinder(pipe_length, d=3, center=true);
                 }
         // stay to keep boards in place
-        translate([-15, 0, stay_height/2-0.001]) cube([2, box_y/3, box_z-stay_height], center=true);
+        translate([-14, box_y/2-13.5, stay_height/2-0.001]) cube([2, 9, box_z-stay_height], center=true);
     }
 }
 module usb() {
@@ -163,18 +158,23 @@ module usb() {
 
 // Walls for battery and to hold boards in place against USB hole
 module mount() {
-    translate([mount_w/2+mount_x-box_x/2, 0,-box_z/2+mount_h/2-.01]) {
-        cube([mount_w, box_y/3, mount_h], center=true);
+    translate([mount_w/2+mount_x-box_x/2, box_y/2-13.5,-box_z/2+mount_h/2-.01]) {
+        cube([mount_w, 9 , mount_h], center=true);
     }
-    if (batt_l > 65) {
-        translate([mount_w/2+mount_x-box_x/2+1.5, (batt_d-box_y)/2 -.01,-box_z/2+(box_z-lid_d)/2-.01]) {
-            cube([mount_w, batt_d, box_z-lid_d], center=true);
+    if (n_batt > 0) {
+        translate([mount_w/2+mount_x-box_x/2+1.5, (batt_d*n_batt-box_y-wires_x)/2 -.01,-box_z/2+(box_z-lid_d)/2-.01]) {
+            cube([mount_w, batt_d*n_batt-wires_x, box_z-lid_d], center=true);
+        }
+    }
+    if (n_batt > 1) {
+        translate([mount_w/2+mount_x-box_x/2+1.5+mount_w+batt_l, (batt_d*n_batt-box_y-wires_x)/2 -.01,-box_z/2+(box_z-lid_d)/2-.01]) {
+            cube([mount_w, batt_d*n_batt-wires_x, box_z-lid_d], center=true);
         }
     }
 }
 
 module ufl_stay() {
-    translate([mount_w/2+mount_x-box_x/2-3, box_y/2-4,-box_z/2-.001]) {
+    translate([mount_w/2+mount_x-box_x/2-3, box_y/2-5,-box_z/2-.001]) {
         cube([4, 4, .65], center=true);
     }
 }
