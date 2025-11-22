@@ -4,7 +4,7 @@ This project provides build instructions and 3D print files for a
 basic but powerful DIY Meshtastic node with the following features:
 
 - Pocket sized
-- Battery powered, 40+ hour run time (Up to a week with 18650 version)
+- Battery powered, 40+ hour run time (Up to 2 weeks with double 18650 version)
 - ~1 watt maximum output on internal battery power
 - ~2 watt maximum output on USB power
 - Based on two easy-to-obtain COTS modules
@@ -54,7 +54,7 @@ supplier.  These are not affiliate links.
 
     Usually $15-20, available from [Amazon](https://www.amazon.com/868MHz-Wireless-E22-900M33S-Distance-Transceiver/dp/B0CZNHX91T) or [AliExpress](https://www.aliexpress.us/item/3256806595412116.html).
     
-- 1000mAh LiPo cell with protection board
+- 1000mAh LiPo cell with protection board or protected 18650 cells
 
     The 50mm x 20mm x 10mm cells from
     [Amazon](https://www.amazon.com/dp/B0F1FM58ZW) or [AliExpress](https://www.aliexpress.us/item/3256802548578153.html) fit this case design.
@@ -95,9 +95,11 @@ supplier.  These are not affiliate links.
     and you may damage the E22.  Always make sure you see a pin on
     one end or the other when connecting.
 
-- SMA female right-angle Pigtail
+- SMA female right-angle 10 or 15cm Pigtail
 
-    Like these from [Amazon](https://www.amazon.com/dp/B0F8VSNWRN) or [AliExpress](https://www.aliexpress.us/item/3256803637335358.html)
+    Like these from [Amazon](https://www.amazon.com/dp/B0F1R1FHK6) or
+    [AliExpress](https://www.aliexpress.us/item/3256803637335358.html)
+    10cm may not be enough for the 2 18650 version of the case.
     
 - Wire
 
@@ -435,9 +437,9 @@ or the correct battery jack wire.
 
 <img src="images/switch_bat.jpg" width="720px">
 
-#### If you will power your node from a protected 18650 Li-Ion cell:
+#### If you will power your node from one or two protected 18650 Li-Ion cells:
 
-Fashion 2 battery holder contact pads from a thin piece of shiny metal
+Fashion battery holder contact pads from a thin piece of shiny metal
 which will take solder.  I cut small pieces of .2mm nickel battery
 welding strip, but a piece cut from the lid of a tin can might also
 work.
@@ -459,6 +461,9 @@ Connect the remaining (closest) battery switch terminal to the
 positive contact pad at the switch end of the case.
 
 <img src="images/18650_positive.jpg" width="720px">
+
+<img src="images/18650x2.jpg" width="720px">
+
 
 ### 16. Install battery switch
 
@@ -613,7 +618,7 @@ carefully removing some solder mask from the ground plane in a
 convenient location.
 
 When used with a solar power manager which provides a 2 amp 5 volt
-regulated output, you can connect it to the B+ pad.  In thsi case wire
+regulated output, you can connect it to the B+ pad.  In this case wire
 the resistor voltage divider to the lithium battery positive terminal
 instead of the B+ pad.
 
