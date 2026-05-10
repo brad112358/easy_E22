@@ -9,13 +9,13 @@ basic but powerful DIY Meshtastic node with the following features:
 - ~2 watt maximum output on USB power
 - Based on two easy-to-obtain COTS modules
 - Relatively easy assembly and soldering with no custom PCB required
-- Optional GPS
+- Optional GPS, OLED display, and Rotary encoder can be added for standalone operation
 
 The castellated edge connections on the E22 module, along with the pin
 assignment flexibility of the NRF52 MCU, allow most signals to pass
 between boards with no wiring.  Just careful positioning, a little
 solder, and three header pins connect all signals.  Point-to-point
-wiring is used only for power.
+wiring is used only for power and peripherals.
 
 The E22 gives this node outstanding performance in a compact package.
 The hinged and swiveling antenna matches the physical design of the
@@ -103,8 +103,10 @@ supplier.  These are not affiliate links.
     
 - Wire
 
-    22-24 AWG stranded Silicone wire is recommended to reduce voltage
-    drop and keep RF power output up to spec.
+    22-24 AWG stranded silicone wire is recommended for power
+    connections to reduce voltage drop and keep RF power output up to
+    spec.  30 AWG silicone wire works well for connecting the optional
+    peripherals.
 
 - Two battery sensing voltage divider resistors
 
@@ -134,6 +136,26 @@ supplier.  These are not affiliate links.
     [This one](https://www.amazon.com/dp/B09LQDG1HY) is relatively low
     power, fits well and has a small active antenna which can be placed a
     a short distance from the other boards to reduce RF noise.
+    
+- Optional passive buzzer/speaker
+
+    A passive buzzer can be installed for (quiet) alert sounds
+    and input feedback.
+    [These](https://www.amazon.com/dp/B08MDNLDSV) were the lowest
+    profile I could find and they just fit.
+
+- Optional rotary encoder
+
+    A small rotary encoder allows control via the Canned Message module.
+    [These](https://www.amazon.com/dp/B07R8GKKX3) were the smallest I
+    could find and fits well if the pins are bent carefully.
+    
+- Optional 1 inch OLED I2C display
+
+    An OLED display is a good compromise with adequate visibility, low
+    cost and reasonably low power.
+    [These](https://www.amazon.com/dp/B09T6SJBV5) fit well on the lid
+    of the case.
     
 ## E22 connections to NRF52 module
 
@@ -175,8 +197,12 @@ supplier.  These are not affiliate links.
 
 | Pin   | Function    |
 | ----- | ----------- |
-| P0.06 | Serial2 RX  |
-| P0.08 | Serial2 TX  |
+| P0.06 | Button Opt  |
+| P0.08 | Buzzer      |
+|       |             |
+| P0.20 | Rotary B    |
+| P0.22 | Rotary A    |
+| P0.24 | Rotary press|
 |       |             |
 | P1.04 | SDA         |
 | P1.06 | SCL         |
@@ -450,10 +476,12 @@ where it will not get caught when the battery is installed.  You
 can use double sided adhesive foam mounting tape to mount the battery contact pads in
 the battery holder section of the case.
 
-If the battery does not fit snugly, add a second layer of mounting
-tape.  If the battery does not make solid electrical contact at the
-negative contact, you can add a bit of solder to create a bump near
-the middle.
+Be careful when installing the battery for the first time not to put
+too apply pressure at the negative contact wall; this part is easy to
+snap off.  If the battery does not fit snugly, add a second layer of
+mounting tape.  If it is too tight, use less mounting tape.  If the
+battery does not make solid electrical contact at the negative side,
+you can add a bit of solder to create a bump near the middle.
 
 <img src="images/18650_negative.jpg" width="720px">
 
@@ -488,6 +516,9 @@ pad.
 
 If you used a connector for the battery, connect it.
 Arrange wires and place the battery in the case.
+Hints for 18650 cells:  Install the one on the longest side
+first.  It may be easier to insert the positive end of cells first.
+Observe battery polarity, there is no reverse voltage protection.
 
 <img src="images/install_bat.jpg" width="720px">
 
@@ -523,11 +554,56 @@ and GND pads from the NRF52840 module to the GPS module as shown.
 
 <img src="images/gps_complete.jpg" width="720px">
 
-Insulate the back of the GPS antenna with tape and connect the U.FL.
+Insulate the back and sides of the GPS antenna with tape and connect the U.FL.
 Position it in the case as far away from the other boards as possible
-so that it faces up and away from obstructions.
+so that it faces up and away from obstructions.  If you attach it with
+double sided tape to the exposed portion of the E22 module, the extra
+ground plane may help with reception.
 
-### 19. Assemble case
+### 19. Optional Passive Buzzer
+
+The buzzer leads can be soldered directly to the output, P0.08 (+) and
+a ground.  If you bend the negative pin, it can be soldered directly to
+the USB connector housing; providing ground, correct placement and a good
+mechanical attachment.
+
+<img src="images/buzzer.jpg" width="720px">
+
+### 20. Optional Display
+
+Solder 4 short light gauge wires from the appropriate display module
+pads to ground, B+/raw, P1.04 (SDA), and P1.06 (SCL).  Power on and
+test the display, then carefully place it in position on the corner
+pegs on the inside of the lid with the top of the display towards the
+longest edge.
+
+Tape the display in place from the back with heat resistant tape, being
+sure to cover the heat steaks.  Then while holding the display in
+place, carefully apply heat with a very low temperature flat soldering tip to
+melt the corner heat stake pegs and fasten the display to the lid.
+
+<img src="images/display_encoder.jpg" width="720px">
+
+### 21. Optional Rotary Encoder
+
+Carefully bend the pins over the back of the plastic encoder body so
+as to keep the pins where they exit the plastic as tight as possible
+to allow them to fit in the case.
+
+Strip a longer than normal portion of a short light gauge wire and solder it from
+one pin on the 2 pin side to the middle pin on the 3 pin side and
+continuing on to a ground pad on the NRF or E22 module.
+
+Solder a wire from the remaining pin on the 2 pin side to P0.24.
+Solder two wires from the remaining pins on the 3 pin side to
+P0.20 (B) and P0.22 (A).
+
+Ensure no pins are shorted except the two ground pins and cover the back
+of the rotary encoder with tape.
+
+Install the rotary encoder as shown above.
+
+### 22. Assemble case
 
 If you haven't already, slide the board assembly fully into place.
 

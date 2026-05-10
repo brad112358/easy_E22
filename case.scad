@@ -19,12 +19,13 @@ stay_height=4.2; // height of E22 with tape
 ant_x=19.5 + diameter;
 ant_y=12;
 n_batt = 2; // Number of 18650 cells 0 for lipo, 1, or 2
-boards_y=27; // increase this for more GPS space or if antenna cable won't qute reach
-boards_x=(n_batt > 1) ? 47: 0;
-mount_x=49.5;
+display=true; // add display and rotary encoder
+boards_y=31; // 27 minimum; increase this for more GPS or encoder space or if antenna cable won't qute reach
+boards_x=(n_batt > 1) ? 48: 0; // decrease for more room for wires to enter electronics section
+mount_x=49.2;
 mount_w=2.0;
 mount_h=2.75;
-sma_d=7.2;
+sma_d=7.2; // SMA and encoder hole diameter
 switch_d=7;
 switch_hole=5.6;
 switch_loc=1.0;
@@ -34,15 +35,21 @@ usb_w=9.4;
 usb_y=-5.1;
 usb_z=6;
 wires_y=(n_batt > 1) ? 7: 0;
-batt_l=(n_batt > 0) ? 71.5: 48;
+batt_l=(n_batt > 0) ? 72.0: 48;
 batt_d=(n_batt > 0) ? 18.75: 0;
-box_y=(n_batt > 1) ? batt_d * n_batt: boards_y;
+box_y=(n_batt > 1) ? batt_d * n_batt-.8: boards_y; // subtract less to increase wire space
 box_x=mount_x+batt_l+mount_w+1.5-boards_x;
 batt_x=mount_w/2+mount_x-box_x/2+mount_w/2+1.5;
 batt_y=-(box_y - batt_d)/2;
 batt_z=0;
 
-box_z = (n_batt > 0) ? batt_d - thick + 1 : box_h;
+knob_length=14;
+knob_width=14;
+knob_inner_hole=6.09;
+knob_outer_hole=12;
+knob_inner_depth=6;
+
+box_z = (n_batt > 0) ? batt_d - thick + 2 : box_h;
 
 pipe_length=box_z - 6.8; // MCU LED light pipe
 
@@ -128,30 +135,55 @@ module top() {
             inside();
 
             // led holes
-            translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 3.5, box_z/2])
-                #cylinder(thick-.4, d=3, center=true);
-            translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 -14.5, box_z/2])
-                #cylinder(thick-.4, d=3, center=true);
-            translate([-box_x/2-boards_x + 25.5, boards_y - box_y/2 - 13.8, box_z/2])
-                #cylinder(thick-.4, d=3, center=true);
+            if (! display) {
+                translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 3.5, box_z/2])
+                    #cylinder(thick-.4, d=3, center=true);
+                    translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 -14.5, box_z/2])
+                    #cylinder(thick-.4, d=3, center=true);
+                    translate([-box_x/2-boards_x + 25.5, boards_y - box_y/2 - 13.8, box_z/2])
+                    #cylinder(thick-.4, d=3, center=true);
+            }
             // space for GPS
             if (box_z < 13)
             translate([-box_x/2-boards_x + 18, boards_y - box_y/2 - 13, box_z/2+thick/4-1.5])
                 #cube ([14,9,thick/2], center=true);
-                }
-        // led light guides
-        difference () {
-            translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 3.5, box_z/2-pipe_length/2])
-                cylinder(pipe_length, d=4, center=true);
-            translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 3.5, box_z/2-pipe_length/2-.001])
-                #cylinder(pipe_length, d=3, center=true);
-                }
-        difference () {
-            translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 14.5, box_z/2-pipe_length/2])
-                cylinder(pipe_length, d=4, center=true);
-            translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 14.5, box_z/2-pipe_length/2-.001])
-                #cylinder(pipe_length, d=3, center=true);
-                }
+            // display hole
+            if (display) {
+                translate([-box_x/2-boards_x + 28.8/2, (boards_y-box_y)/2 - 2.4, box_z/2+thick/4])
+                    cube([27.8,15.5,thick/2], center=true);
+                translate([-box_x/2-boards_x + 28.8/2, (boards_y-box_y)/2+.1, box_z/2+thick/4-.4])
+                    cube([27.8,21,thick/2], center=true);
+                translate([-box_x/2-boards_x + 28.8/2, (boards_y-box_y)/2, box_z/2+thick/4-.4])
+                    cube([13,27.5,thick/2], center=true);
+                translate([-box_x/2-boards_x + 28.8/2, (boards_y-box_y)/2, box_z/2+thick/4-2.1])
+                    cube([28.8,28.8,thick/2], center=true);
+            }
+        }
+        if (!display) {
+            // led light guides
+            difference () {
+                translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 3.5, box_z/2-pipe_length/2])
+                    cylinder(pipe_length, d=4, center=true);
+                translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 3.5, box_z/2-pipe_length/2-.001])
+                    #cylinder(pipe_length, d=3, center=true);
+                    }
+            difference () {
+                translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 14.5, box_z/2-pipe_length/2])
+                    cylinder(pipe_length, d=4, center=true);
+                translate([-box_x/2-boards_x + 8.5, boards_y - box_y/2 - 14.5, box_z/2-pipe_length/2-.001])
+                    #cylinder(pipe_length, d=3, center=true);
+                    }
+        } else {
+            // display posts 
+            translate([-box_x/2-boards_x + 28.8/2+11.75, (boards_y-box_y)/2+11.95, box_z/2+thick/4-3])
+                cylinder(3, d=1.6);
+            translate([-box_x/2-boards_x + 28.8/2-11.75, (boards_y-box_y)/2+11.95, box_z/2+thick/4-3])
+                cylinder(3, d=1.6);
+            translate([-box_x/2-boards_x + 28.8/2+11.75, (boards_y-box_y)/2-11.95, box_z/2+thick/4-3])
+                cylinder(3, d=1.6);
+            translate([-box_x/2-boards_x + 28.8/2-11.75, (boards_y-box_y)/2-11.95, box_z/2+thick/4-3])
+                cylinder(3, d=1.6);
+        }
         // stay to keep boards in place
         translate([mount_w/2+mount_x-box_x/2-boards_x-1.5, boards_y-27-box_y/2+13.5, stay_height/2-0.001]) cube([2, 9, box_z-stay_height], center=true);
     }
@@ -170,8 +202,8 @@ module mount() {
     translate([mount_w/2+mount_x-box_x/2-boards_x, boards_y-27-box_y/2+13.5,-box_z/2+mount_h/2-.01]) {
         cube([mount_w, 9 , mount_h], center=true);
     }
-    translate([19-box_x/2-boards_x/2, boards_y-27-box_y/2+.2,-box_z/2+mount_h/2-.01]) {
-        cube([9, mount_w, mount_h], center=true);
+    translate([5-box_x/2-boards_x/2, boards_y-27-box_y/2+.2,-box_z/2+mount_h/2-.01]) {
+        cube([30, mount_w, mount_h], center=true);
     }
     if (n_batt > 0) {
         translate([mount_w/2+mount_x-box_x/2-boards_x+1.5, (batt_d*n_batt-box_y-wires_y)/2 -.01,-box_z/2+(box_z-lid_d)/2-.01]) {
@@ -201,7 +233,17 @@ module sw_hole() {
     translate([(box_x+diameter)/2 + switch_d/2 + switch_loc, box_y/2 - ant_y+2, +1.5+(box_z-11.8)/2])
         rotate([120,0,0])
         {
-                cylinder(thick+4, d=switch_hole);
+            cylinder(thick+4, d=switch_hole);
+        }
+}
+
+module enc_hole() {
+    translate([-box_x/2-mount_x-thick/2-2, -box_y/2 + 6.25, -1])
+        rotate([90,0,90])
+        {
+            if (display) {
+                cylinder(thick+4, d=sma_d);
+            }
         }
 }
 
@@ -211,13 +253,29 @@ module case() {
         translate([-box_x/2 - boards_x - thick,boards_y - box_y/2 -usb_w/2+usb_y, usb_z]) usb();
         #sma();
         #sw_hole();
+        #enc_hole();
     }
     mount();
     ufl_stay();
     // Not quit centered when box size or n_batt is changed
     translate([-box_x/4-2*boards_x/3,-box_y/2-thick/2+.001,-box_z/2+lid_d]) rotate ([90,0,0]) linear_extrude(.25) text ("Meshtastic", size=8);
-    translate([-box_x/2-boards_x-thick/2+0.001,(boards_y-27)/2+12.8-box_y/2,0]) rotate ([90,0,-90]) linear_extrude(.3) text ("ANT", size=4.9);
-    translate([-box_x/2-boards_x-thick/2+0.001,(boards_y-27)/2+12.5-box_y/2,-box_z/2]) rotate ([90,0,-90]) linear_extrude(.3) text ("First", size=4.9);
+    translate([-box_x/2-boards_x+14,boards_y-box_y/2+thick/2-0.001,0]) rotate ([-90,180,0]) linear_extrude(.3) text ("ANT", size=4.9);
+    translate([-box_x/2-boards_x+14,boards_y-box_y/2+thick/2-0.001,-box_z/2]) rotate ([-90,180,0]) linear_extrude(.3) text ("First", size=4.9);
+}
+
+module encoder_knob() {
+    $fn=16;
+    difference() {
+        minkowski() {
+            cylinder(knob_length-diameter, d=knob_width-diameter);
+            sphere(d=diameter);
+
+        }
+        cylinder(knob_inner_depth, d=knob_inner_hole);
+        translate([0,0,knob_inner_depth-.1])
+            cylinder(knob_length-knob_inner_depth, d=knob_outer_hole, $fn=50);
+        
+    }
 }
 
 use <threads.scad>;
@@ -252,3 +310,4 @@ case();
 translate([0,-box_y-thick-4,0]) top();
 //translate ([box_x/2+ant_x/2+thick,-box_y/2-thick, -box_z/2-thick/2+height/2]) switch_lock();
 //translate ([-box_x/2-diameter*2-thick-2,-box_y/2-thick, -box_z/2-thick/2+height/2]) term_switch_lock();
+translate ([box_x/2+ant_x/2+thick,-box_y/2-thick, -box_z/2-thick/2+height/2])encoder_knob();
