@@ -97,8 +97,7 @@ supplier.  These are not affiliate links.
 
 - SMA female right-angle 10 or 15cm Pigtail
 
-    Like these from [Amazon](https://www.amazon.com/dp/B0F1R1FHK6) or
-    [AliExpress](https://www.aliexpress.us/item/3256803637335358.html)
+    Like these from [Amazon](https://www.amazon.com/dp/B0F1R1FHK6)
     10cm may not be enough for the 2 18650 version of the case.
     
 - Wire
