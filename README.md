@@ -605,6 +605,10 @@ of the rotary encoder with tape.
 
 Install the rotary encoder as shown above.
 
+Enable the Canned Message module with Rotary encoder #1 enabled and
+GPIO pin 22 and 20 for the A port and B port and GPIO pin 24 for the
+Press port.
+
 ### 22. Assemble case
 
 If you haven't already, slide the board assembly fully into place.
