@@ -226,15 +226,18 @@ Strip and tin each wire before soldering it in place.
 ### 1. 3D print or obtain a case
 
 The OpenSCAD source and STL files are included here.  Print the
-case_18650.stl version if you plan to use a protected 18650 cell,
-otherwise, use the case.stl file.  The OpenSCAD source is included if
-you want to modify the case.  If you don't have a 3D printer or a
-friend with one, some public libraries have one.  There are also
-companies that sell this service.
+case.stl file for the basic light weight/compact design.  Print one of
+the 18650 files if you plan to use one or two protected 18650 cells
+for longer battery life.  Otherwise, if you want a display, use the
+display*.stl files.  The OpenSCAD source is included if you want to
+modify the case.  If you don't have a 3D printer or a friend with one,
+some public libraries have them.  There are also companies that sell
+this service.
 
-PLA works fine.  Use your highest quality settings.  Supports should
-not be required.  Test fit the cover after printing.  It should snap
-on tightly.
+PLA works fine, though PETG or ABS/ASA is better if your node might be
+left in a vehicle or otherwise exposed to heat.  Use your highest
+quality settings.  Supports should not be required.  Test fit the
+cover after printing.  It should snap on tightly.
 
 ### 2. Flash firmware
 
