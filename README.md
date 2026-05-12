@@ -54,17 +54,24 @@ supplier.  These are not affiliate links.
 
     Usually $15-20, available from [Amazon](https://www.amazon.com/868MHz-Wireless-E22-900M33S-Distance-Transceiver/dp/B0CZNHX91T) or [AliExpress](https://www.aliexpress.us/item/3256806595412116.html).
     
-- 1000mAh LiPo cell with protection board or protected 18650 cells
+- 1000mAh LiPo cell with protection board or protected Li-ion 18650 cells
 
     The 50mm x 20mm x 10mm cells from
-    [Amazon](https://www.amazon.com/dp/B0F1FM58ZW) or [AliExpress](https://www.aliexpress.us/item/3256802548578153.html) fit this case design.
+    [Amazon](https://www.amazon.com/dp/B0F1FM58ZW) or
+    [AliExpress](https://www.aliexpress.us/item/3256802548578153.html)
+    fits the smallest case design.
 
     Smaller cells can still provide useful battery life, but be sure
     they are capable of over 1 amp output without significant voltage
     drop.  Higher C cells will produce slightly higher RF output.
-    Larger cells will require a larger case.  You may also want a
+    You may also want a
     matching JST PH 2.0 socket like this one from
     [AliExpress](https://www.aliexpress.us/item/3256802377876396.html).
+    
+    You could try a [pre-made protected 18650 battery pack](https://www.amazon.com/GYMIN-Rechargeable-B0143KH9KG-18650-1s1p/dp/B0FRMR4ZHD).
+    However, Amazon may not be the best source for high quality 18650 cells so
+    purchasing protected 18650 cells elsewhere is recommended if you want the
+    best battery life.
 
 - Mini micro 3-pin SPDT toggle switch
 
@@ -458,14 +465,23 @@ battery to be removable.
 
 <img src="images/jack.jpg" width="720px">
 
-#### If you will power your node from a LiPo cell
+#### If you will power your node from a LiPo cell or a Li-ion pack.
 
 Connect the remaining (closest) battery switch terminal to the positive (red) battery lead
 or the correct battery jack wire.
 
 <img src="images/switch_bat.jpg" width="720px">
 
-#### If you will power your node from one or two protected 18650 Li-Ion cells:
+If you have access to a battery spot welder (soldering directly to
+18650 cells is not recommended), you can build your own high capacity
+18650 battery 1S 2P pack for a more reliable connection than the
+removable cell method below.  Be sure to include a battery protection
+board if you use unprotected cells.  Or, you can purchase a protected
+1S1P 18650 battery pack.  If you purchase a 1S2P battery, you may need
+to reform the heat shrink wrapper a bit to use the existing case
+design
+
+#### If you will power your node from one or two  removable protected 18650 Li-Ion cells:
 
 Fashion battery holder contact pads from a thin piece of shiny metal
 which will take solder.  I cut small pieces of .2mm nickel battery
@@ -478,12 +494,13 @@ where it will not get caught when the battery is installed.  You
 can use double sided adhesive foam mounting tape to mount the battery contact pads in
 the battery holder section of the case.
 
-Be careful when installing the battery for the first time not to put
-too apply pressure at the negative contact wall; this part is easy to
-snap off.  If the battery does not fit snugly, add a second layer of
-mounting tape.  If it is too tight, use less mounting tape.  If the
-battery does not make solid electrical contact at the negative side,
-you can add a bit of solder to create a bump near the middle.
+When installing the battery for the first time, work slowly to allow
+the foam tape to compress and be careful not to apply too much
+pressure at the negative contact wall; this part is easy to snap off.
+If the battery does not fit snugly, add a second layer of mounting
+tape.  If it is too tight, use less mounting tape.  If the battery
+does not make solid electrical contact at the negative side, you can
+add a bit of solder to create a bump near the middle.
 
 <img src="images/18650_negative.jpg" width="720px">
 
@@ -520,7 +537,7 @@ If you used a connector for the battery, connect it.
 Arrange wires and place the battery in the case.
 Hints for 18650 cells:  Install the one on the longest side
 first.  It may be easier to insert the positive end of cells first.
-Observe battery polarity, there is no reverse voltage protection.
+Observe battery polarity, there is no reverse voltage protection!
 
 <img src="images/install_bat.jpg" width="720px">
 
