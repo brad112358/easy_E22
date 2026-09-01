@@ -524,7 +524,7 @@ tape before spot welding .2mm Nickel strips on both ends positive to
 positive and negative to negative to form a 2P pack.  Use additional
 heat resistant tape where the protection circuit will go.
 
-<img src="images/battery_pack_installed.jpg" width="720px">
+<img src="images/battery_pack.jpg" width="720px">
 
 Solder the wires to the battery protection circuit before welding its
 tabs over the top of the welded Nickel strips.  Observe correct
