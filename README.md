@@ -520,7 +520,7 @@ battery, you may need to reform the heat shrink wrapper a bit to use
 the existing case design which is intended to fit the cylindrical cells.
 
 Insulate the positive terminals with paper disks or heat resistant
-tape before spot welding .2mm Nickel strips on both ends positive to
+tape before spot welding .2mm Nickel strips on both ends; positive to
 positive and negative to negative to form a 2P pack.  Use additional
 heat resistant tape where the protection circuit will go.
 
