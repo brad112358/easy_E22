@@ -1,6 +1,6 @@
 /*
   Case with snap-on top for easy-nrf52-pro-micro_e22 DIY Meshtastic pocket node
-  Copyright (c) 2025 Bradley Bosch
+  Copyright (c) 2026 Bradley Bosch
   This prints and fits well for me, but may still needs some parameterization improvement.
   If you change a parameter, you might want to double check it didn't have an unexpected
   effect before you print.
@@ -73,6 +73,10 @@ module inside() {
             translate([batt_x-boards_x,batt_y+batt_d-(thick-2)/2,batt_z]) {
                 rotate([0,90,0])
                     cylinder(batt_l, d=batt_d, center=false);
+            }
+            // A little extra off the top to accomodate battery protection
+            translate([batt_x-boards_x,batt_y,batt_z+batt_d/2-thick*2/3]) {
+                cube([batt_l, batt_d, thick/2], center=false);
             }
         }
 }

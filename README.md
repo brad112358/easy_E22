@@ -4,7 +4,7 @@ This project provides build instructions and 3D print files for a
 basic but powerful DIY Meshtastic node with the following features:
 
 - Pocket sized
-- Battery powered, 40+ hour run time (Up to 2 weeks with double 18650 version)
+- Battery powered, ~40 hour run time (Up to 2 weeks with double 18650 version)
 - ~1 watt maximum output on internal battery power
 - ~2 watt maximum output on USB power
 - Based on two easy-to-obtain COTS modules
@@ -47,14 +47,14 @@ supplier.  These are not affiliate links.
 
 - "Pro Micro compatible" NRF52840 dev module
 
-    Such as the [Teyleten](https://www.amazon.com/dp/B0CYLNZ6V4), [Tenstar Robot](https://www.aliexpress.us/item/3256807958420169.html) or [Nice!Nano](https://www.aliexpress.us/item/3256805975015643.html).
+    Such as the [Teyleten](https://www.amazon.com/dp/B0CYLNZ6V4), [Tenstar Robot](https://www.aliexpress.us/item/3256807958420169.html).
     Some of these can be found for less than $3 each.
 
 - Ebyte E22 900M33S LoRa module
 
     Usually $15-20, available from [Amazon](https://www.amazon.com/868MHz-Wireless-E22-900M33S-Distance-Transceiver/dp/B0CZNHX91T) or [AliExpress](https://www.aliexpress.us/item/3256806595412116.html).
     
-- 1000mAh LiPo cell with protection board or protected Li-ion 18650 cells
+- 1000mAh LiPo cell with protection board or Li-ion 18650 cells
 
     The 50mm x 20mm x 10mm cells from
     [Amazon](https://www.amazon.com/dp/B0F1FM58ZW) or
@@ -69,9 +69,11 @@ supplier.  These are not affiliate links.
     [AliExpress](https://www.aliexpress.us/item/3256802377876396.html).
     
     You could try a [pre-made protected 18650 battery pack](https://www.amazon.com/GYMIN-Rechargeable-B0143KH9KG-18650-1s1p/dp/B0FRMR4ZHD).
-    However, Amazon may not be the best source for high quality 18650 cells so
-    purchasing protected 18650 cells elsewhere is recommended if you want the
-    best battery life.
+    However, Amazon may not be the best source for high quality 18650 cells; so
+    purchasing 18650 cells elsewhere is recommended if you want the
+    best battery life.  You can use protected cells or, you can build
+    your own battery pack with a [protection circuit](https://www.amazon.com/dp/B07W75BQWW) (recommended only if
+    you have experience building battery packs using a spot welder).
 
 - Mini micro 3-pin SPDT toggle switch
 
@@ -92,9 +94,9 @@ supplier.  These are not affiliate links.
     slightly longer element to bring the resonant frequency down a bit
     from ~960 MHz.  The result looks very good now on the VNA.
     
-    The ALFA Network ARS-915PR I ordered from
-    [ROKLAND](https://store.rokland.com/collections/802-11ah-wi-fi-halow/products/alfa-network-ars-915pr-2-dbi-helium-miner-hotspot-replacement-antenna-with-90-elbow-for-rak-bobcat-sensecap-m1)
-    appears well tuned on my VNA.
+    The ALFA Network ARS-915P from
+    [ROKLAND](https://store.rokland.com/collections/all-helium-antennnas/products/alfa-network-ars-915pr-2-dbi-sma-male-915-mhz-antenna-with-90-elbow-for-t-beam-t-echo-lora32)
+    Should be good quality for US use.
 
     When choosing antennas, be aware of the difference between SMA and
     RP-SMA.  It is, unfortunately, possible to attach an RP-SMA
@@ -105,7 +107,7 @@ supplier.  These are not affiliate links.
 - SMA female right-angle 10 or 15cm Pigtail
 
     Like these from [Amazon](https://www.amazon.com/dp/B0F1R1FHK6)
-    10cm may not be enough for the 2 18650 version of the case.
+    10cm may not be quite enough for the 2 18650 version of the case.
     
 - Wire
 
@@ -140,8 +142,8 @@ supplier.  These are not affiliate links.
 
     GPS modules only need power, ground, and two serial connections.
     [This one](https://www.amazon.com/dp/B09LQDG1HY) is relatively low
-    power, fits well and has a small active antenna which can be placed a
-    a short distance from the other boards to reduce RF noise.
+    power, fits well and has a small active antenna which fits well in
+    the case.
     
 - Optional passive buzzer/speaker
 
@@ -220,7 +222,8 @@ supplier.  These are not affiliate links.
 
 Instead of a custom PCB, the castellated edge of the E22 module
 is soldered on the insulated back of the NRF52 module.
-Construction time may be 2-4 hours.
+Construction time may be 1-2 hours for the basic node or 3-6 hours for
+a node with a display and 18650 battery pack.
 
 When soldering the castellated edge, be sure *not* to solder
 pin 12 of the E22 module.
@@ -240,9 +243,9 @@ modify the case.  If you don't have a 3D printer or a friend with one,
 some public libraries have them.  There are also companies that sell
 this service.
 
-PLA works fine, though PETG or ABS/ASA is better if your node might be
+PLA works great, though PETG or ABS/ASA is better if your node might be
 left in a vehicle or otherwise exposed to heat.  Use your highest
-quality settings.  Supports should not be required.  Test fit the
+strength settings.  Supports should not be required.  Test fit the
 cover after printing.  It should snap on tightly.
 
 ### 2. Flash firmware
@@ -263,22 +266,57 @@ e.g., `update-nice_nano_bootloader-0.9.2_nosd.uf2`.
 If you may later want to use OTA firmware updates, flash the bootloader
 included [here](update-promicro_nrf52840_bootloader-0.9.2-otafix1_nosd.uf2) instead.
 
-Note that since there is no reset
-button, you need to carefully and briefly short the RST and GND pads
-twice within 1/2 second to activate bootloader mode.  Be sure you short
-only the correct pins, 3rd and 4th from the end.
-Small tweezers work well.
-It may take a few tries; look for the red LED to remain off or slow "breathing"
-to show success.
+Note that since there is no reset button, you need to carefully and
+briefly short the RST and GND pads twice within 1/2 second to activate
+bootloader mode after connecting the USB port to your computer.  Be
+sure you short only the correct pins, 3rd and 4th from the end.  Small
+tweezers work well.  It may take a few tries; look for the red LED to
+remain off or slow "breathing" to show success.
 
 Once the bootloader is installed, you can use the same method to
-install the Meshtastic firmware.  Note, this node is not yet supported
-in the Meshtastic firmware source, so I have provided a development
-[firmware binary](firmware.uf2).  The source is
-[here](https://github.com/brad112358/meshtastic_firmware/tree/easy_promicro_e22).
+install the Meshtastic firmware.  I have provided an older
+[firmware binary](firmware.uf2), but it is probably best to build the
+firmware using github workflow actions.
 
-After everything is flashed, plug just the NRF board into USB power
-and verify you can pair and connect to it with the Meshtastic app.
+
+Meshtastic does not release pre-compiled firmware for this node, but
+you don't need to setup a full development environment to build the
+latest meshtastic firmware.  Instead, you can use github workflow
+actions to build the firmware from your own fork on github.  Currently
+only the develop branch and v2.8.0.* tags include support for this
+node.
+
+To build the firmware on github:
+
+- Login to your personal github account and go to (meshtastic/firmware)[https://github.com/meshtastic/firmware]
+
+- Create your own fork by selecting "create a new fork" from the "Fork"
+  dropdown menu.  Uncheck "Copy the develop branch only"
+  
+- Click "Actions" at the top of your new branch main page and enable workflows
+
+- Select "Build One Target" and click on the dropdown "Run workflow" menu
+
+- Click on the "Branch:" dropdown and select the Branch or Tag you
+  wish to build;  A stable or beta tag is recommended
+  
+- Enter "nrf52_promicro_diy-easypromicro" into the target board field
+  and click "Run workfloww"
+  
+- You should eventually see the job status change to "Success" which may take several
+  minutes depending on how busy the github workflow runners are
+  
+- Refresh the page in your web browser to show the build job Artifacts
+
+- Download the largest artifact which is a zip file containing .uf2
+  files for the firmware and factory erase images and an ota zip file.
+  
+- Unpack the downloaded zip file and flash the firmware-nrf52-easypromicro*.uf2
+  file using the same method used to flash the bootloader above.
+
+After everything is succesfully flashed, unplug and plug in just the
+NRF board into USB power and verify you can pair and connect to it
+with the Meshtastic app.
 
 ### 3. Set battery charge current
 
@@ -474,17 +512,35 @@ or the correct battery jack wire.
 
 If you have access to a battery spot welder (soldering directly to
 18650 cells is not recommended), you can build your own high capacity
-18650 battery 1S 2P pack for a more reliable connection than the
-removable cell method below.  Be sure to include a battery protection
-board if you use unprotected cells.  Or, you can purchase a protected
-1S1P 18650 battery pack.  If you purchase a 1S2P battery, you may need
-to reform the heat shrink wrapper a bit to use the existing case
-design
+3.7 volt 18650 battery 1S 2P pack for a more reliable connection than
+the removable cell method below.  Be sure to include a battery
+protection board if you use unprotected cells.  Or, you can purchase a
+protected 1S1P 18650 battery pack.  If you purchase a protected 1S2P
+battery, you may need to reform the heat shrink wrapper a bit to use
+the existing case design which is intended to fit the cylindrical cells.
+
+Insulate the positive terminals with paper disks or heat resistant
+tape before spot welding .2mm Nickel strips on both ends positive to
+positive and negative to negative to form a 2P pack.  Use additional
+heat resistant tape where the protection circuit will go.
+
+<img src="images/battery_pack_installed.jpg" width="720px">
+
+Solder the wires to the battery protection circuit before welding its
+tabs over the top of the welded Nickel strips.  Observe correct
+polarity everywhere.
+
+<img src="images/battery_pack_installed.jpg" width="720px">
 
 #### If you will power your node from one or two  removable protected 18650 Li-Ion cells:
 
+This method can be fiddly and less reliable than a protected battery
+pack with a connector as above especially if the node is left in a hot
+environment, but it uses easy to find protected cells and requires no
+battery pack construction.
+
 Fashion battery holder contact pads from a thin piece of shiny metal
-which will take solder.  I cut small pieces of .2mm nickel battery
+which will take solder.  I cut small pieces of .2mm Nickel battery
 welding strip, but a piece cut from the lid of a tin can might also
 work.
 
@@ -635,6 +691,47 @@ may want to use some tape to keep the longer wires in place at the
 side of the case, away from the protruding parts of the lid.
 
 <img src="images/assemble_case.jpg" width="720px">
+
+### 23. Configure Meshtastic
+
+In addition to the normal Region and LoRa preset, some hardware
+features of this node need to be setup after the initial firmware
+flash using the CLI or Meshtastic phone app:
+
+- Voltage sense: Device configuration -> Power -> ADC multiplier override ratio
+
+    For the recommended 10K to 1M ohm resistors, 2.0 should be close;
+    for a more accurate reading, let the reported voltage stabilize
+    for several minutes, then measure the battery voltage with a
+    multi-meter and calculate a new ratio as 
+    current_ratio * measured_voltage / reported_voltage
+
+- Optional GPS: Device configuration -> Position -> Device GPS -> GPS Mode
+  
+    Set to "ENABLED" if you wish to use your GPS or "DISABLED" to save power
+    
+- Optional display and rotary encoder: Module configuration -> Canned Message
+
+    Turn on "Rotary encoder #1 enabled"
+
+    Set "GPIO pin for rotary encoder A port" to 22
+
+    Set "GPIO pin for rotary encoder B port" to 20
+    
+    Set "GPIO pin for rotary encoder Press port" to 24
+    
+    Set "Generate input event on Press" to "SELECT"
+    
+    Set "Generate input event on CW" to "RIGHT"
+    
+    Set "Generate input event on CCW" to "LEFT"
+    
+    After saving the rotary encoder configuration, use the rotary
+    encoder and display to select the "System" page, press the
+    encoder and set "Notifications" to "Notifications" or
+    anything other than "All enabled"; this will improve response
+    time for the encoder by disabling buzzer sounds when the
+    encoder is rotated.
 
 ## Usage notes:
 
