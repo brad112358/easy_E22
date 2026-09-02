@@ -17,11 +17,15 @@ between boards with no wiring.  Just careful positioning, a little
 solder, and three header pins connect all signals.  Point-to-point
 wiring is used only for power and peripherals.
 
-The E22 gives this node outstanding performance in a compact package.
+The E22 gives this node outstanding performance in a compact package
+with longer range than most commercially available pocket nodes.
 The hinged and swiveling antenna matches the physical design of the
 node, shielding the battery power switch from accidental bumps.  This
 node works well when folded, yet makes no compromises when
 straightened up at your destination.
+
+The core of this build can also be used in solar nodes; see the note in
+step 11.
 
 <img src="images/easy_pocket_node.jpg" width="1000px">
 
@@ -72,7 +76,7 @@ supplier.  These are not affiliate links.
     However, Amazon may not be the best source for high quality 18650 cells; so
     purchasing 18650 cells elsewhere is recommended if you want the
     best battery life.  You can use protected cells or, you can build
-    your own battery pack with a [protection circuit](https://www.amazon.com/dp/B07W75BQWW) (recommended only if
+    your own battery pack with a [protection circuit](https://www.amazon.com/dp/B07W75BQWW) (recommended if
     you have experience building battery packs using a spot welder).
 
 - Mini micro 3-pin SPDT toggle switch
@@ -256,6 +260,8 @@ bottom of the board will be available in case anything goes wrong.
 This also ensures that the TXEN pad is not driven when it shouldn't be,
 which could damage the E22.
 
+#### Update Bootloader
+
 Follow the Meshtastic instructions to upgrade to the
 [Adafruit bootloader](https://github.com/adafruit/Adafruit_nRF52_Bootloader) using
 [Method 1: UF2](https://meshtastic.org/docs/getting-started/flashing-firmware/nrf52/update-nrf52-bootloader/#method-1-using-the-uf2-file-recommended).
@@ -267,16 +273,20 @@ If you may later want to use OTA firmware updates, flash the bootloader
 included [here](update-promicro_nrf52840_bootloader-0.9.2-otafix1_nosd.uf2) instead.
 
 Note that since there is no reset button, you need to carefully and
-briefly short the RST and GND pads twice within 1/2 second to activate
-bootloader mode after connecting the USB port to your computer.  Be
-sure you short only the correct pins, 3rd and 4th from the end.  Small
-tweezers work well.  It may take a few tries; look for the red LED to
+briefly short the RST to any convienent GND like the pad next to RST
+or the USB housing twice within 1/2 second to activate bootloader mode
+after connecting the USB port to your computer.  Be sure you short
+only the correct pin, 4th from the USB end.  A Small tweezers or a
+test lead or stiff wire or even a multimeter set to measure current
+works well .  It may take more than one try; look for the red LED to
 remain off or slow "breathing" to show success.
+
+#### Install or Update Meshtastic
 
 Once the bootloader is installed, you can use the same method to
 install the Meshtastic firmware.  I have provided an older
 [firmware binary](firmware.uf2), but it is probably best to build the
-firmware using github workflow actions.
+latest firmware using github workflow actions.
 
 
 Meshtastic does not release pre-compiled firmware for this node, but
@@ -322,9 +332,10 @@ with the Meshtastic app.
 
 If you will connect a battery larger than about 500 mAh, you probably
 want to short the two square "BOOST" pads on the back of the board
-near the RST and VCC pads to reduce charge time; Solder stripped
-wire-wrap wire, or separate a couple of coarse wire strands, or just
-bridge the pads with solder, keeping it as thin as you can.
+near the RST and VCC pads to increase the charge current and reduce
+charge time; Solder stripped wire-wrap wire, or separate a couple of
+coarse wire strands, or just bridge the pads with solder, keeping it
+as thin as you can.
 
 <img src="images/charge_jumper.jpg" width="720px">
 
@@ -441,6 +452,18 @@ carefully remove some material from the wall with a sharp knife or
 file.  If the USB connector is not held firmly in place in the USB
 hole, add a layer or two of tape to the wall.
 
+Note: If you plan to use this in a 1 or 2 watt output solar node
+without GPS, you are essentially done with construction of the core
+part of the node at this point.  I don't provide complete build
+instructions for a solar node here, but you may want to review the
+remainder of this document for configuration and other useful
+information.  A 1 watt output solar node could be powered by a
+protected Li battery connected directly to the B+ or raw pad and
+charged by a 5 volt regulated panel connected to the USB port or the
+LDO pin mentioned in section 15.  Or, a 2 W node could be constructed
+by connecting the 5 volt output of a more efficient MPPT charge
+controller with battery to B+ or raw.
+
 ### 12. Wire battery switch
 
 Clip all three terminals of the battery switch so they are a bit shorter than
@@ -503,26 +526,29 @@ battery to be removable.
 
 <img src="images/jack.jpg" width="720px">
 
-#### If you will power your node from a LiPo cell or a Li-ion pack.
+#### If you will power your node from a LiPo cell or a Li-ion pack:
 
 Connect the remaining (closest) battery switch terminal to the positive (red) battery lead
 or the correct battery jack wire.
 
 <img src="images/switch_bat.jpg" width="720px">
 
+If you purchase a protected 1S2P battery, you may need to remove or
+reform the heat shrink wrapper to use the existing case design which
+is intended to fit the cylindrical cells.
+
 If you have access to a battery spot welder (soldering directly to
 18650 cells is not recommended), you can build your own high capacity
-3.7 volt 18650 battery 1S 2P pack for a more reliable connection than
-the removable cell method below.  Be sure to include a battery
-protection board if you use unprotected cells.  Or, you can purchase a
-protected 1S1P 18650 battery pack.  If you purchase a protected 1S2P
-battery, you may need to reform the heat shrink wrapper a bit to use
-the existing case design which is intended to fit the cylindrical cells.
+3.7 volt 18650 1S 2P pack for a more reliable connection than the
+removable cell method below.  Be sure to include a battery protection
+board if you use unprotected cells.
 
 Insulate the positive terminals with paper disks or heat resistant
 tape before spot welding .2mm Nickel strips on both ends; positive to
-positive and negative to negative to form a 2P pack.  Use additional
-heat resistant tape where the protection circuit will go.
+positive and negative to negative to form a 1S 2P pack.  Be sure to keep
+the cells perfectly parallel to each other with no gap as the case
+does not have extra room.  Use additional heat resistant tape where
+the positive terminals of the protection circuit will go.
 
 <img src="images/battery_pack.jpg" width="720px">
 
@@ -532,7 +558,7 @@ polarity everywhere.
 
 <img src="images/battery_pack_installed.jpg" width="720px">
 
-#### If you will power your node from one or two  removable protected 18650 Li-Ion cells:
+#### If you will power your node from one or two removable protected 18650 Li-Ion cells:
 
 This method can be fiddly and less reliable than a protected battery
 pack with a connector as above especially if the node is left in a hot
