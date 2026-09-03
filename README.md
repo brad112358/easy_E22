@@ -277,7 +277,7 @@ briefly short the RST to any convienent GND like the pad next to RST
 or the USB housing twice within 1/2 second to activate bootloader mode
 after connecting the USB port to your computer.  Be sure you short
 only the correct pin, 4th from the USB end.  A Small tweezers or a
-test lead or stiff wire or even a multimeter set to measure current
+stiff wire or even the leads of a multimeter set to measure current
 works well .  It may take more than one try; look for the red LED to
 remain off or slow "breathing" to show success.
 
@@ -301,8 +301,15 @@ To build the firmware on github:
 - Login to your personal github account and go to (meshtastic/firmware)[https://github.com/meshtastic/firmware]
 
 - Create your own fork by selecting "create a new fork" from the "Fork"
-  dropdown menu.  Uncheck "Copy the develop branch only"
+  dropdown menu.  Be sure to Uncheck "Copy the develop branch only"
   
+- FYI: Since the github web interface only supports syncing existing
+  branches, if you later want to build a tag or branch that didn't
+  exist when you created the fork, you may need to first delete your
+  fork.  This can be done under Settings -> Danger Zone on your github
+  fork.  There are ways around this if you are a git command line
+  user.
+
 - Click "Actions" at the top of your new branch main page and enable workflows
 
 - Select "Build One Target" and click on the dropdown "Run workflow" menu
@@ -314,7 +321,7 @@ To build the firmware on github:
   and click "Run workfloww"
   
 - You should eventually see the job status change to "Success" which may take several
-  minutes depending on how busy the github workflow runners are
+  minutes or even a few hours depending on how busy the github workflow runners are
   
 - Refresh the page in your web browser to show the build job Artifacts
 
