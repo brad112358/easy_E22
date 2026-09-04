@@ -25,7 +25,7 @@ node works well when folded, yet makes no compromises when
 straightened up at your destination.
 
 The core of this build can also be used in solar nodes; see the note in
-step 11.
+step 11 and the techincal notes at the end.
 
 <img src="images/easy_pocket_node.jpg" width="1000px">
 
@@ -808,7 +808,7 @@ module is between 4.2 and 3.0 volts.  The maximum output power of the
 E22-900M33S will vary from about 1.2W to about 0.5W as the battery
 voltage drops.
 
-When operating on 5-volt USB power with the battery switch off, the E22 is
+When operating on 5-volt USB power with the battery switch off, the E22-900m33S is
 capable of a maximum output power of about 2 watts.  The Meshtastic firmware
 variant `diy/easy-nrf-pro-micro_e22` is configured to expect battery
 voltage, thus, when powered via 5-volt USB, configuring the node for 30 dBm
