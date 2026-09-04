@@ -774,7 +774,7 @@ the internal 1 S Lithium battery.
 When the battery switch is on (towards the SMA jack), the battery is
 connected to both the battery terminal of the NRF board and VCC of the
 E22.  If the USB port is plugged in when the battery switch is on, the onboard
-charger will charge the 1000 mAh battery in about 3 hours, assuming
+charger will charge a 1000 mAh battery in about 3 hours, assuming
 you shorted the square pads as suggested.
 
 When the battery switch is off (towards the case), the battery is
@@ -810,7 +810,7 @@ voltage drops.
 
 When operating on 5-volt USB power with the battery switch off, the E22-900m33S is
 capable of a maximum output power of about 2 watts.  The Meshtastic firmware
-variant `diy/easy-nrf-pro-micro_e22` is configured to expect battery
+variant `easy-nrf-pro-micro_e22` is configured to expect battery
 voltage, thus, when powered via 5-volt USB, configuring the node for 30 dBm
 (1 watt) output should produce about 33 dBm (2 watts).
 
@@ -832,7 +832,9 @@ power, it will flash every 2 seconds.
 
 If you installed and enabled the GPS, its LED will light while looking
 for a fix.  It will flash at 1 Hz when a fix is obtained and turn off
-when when idle.
+when when idle.  Note that when the GPS is configured as "not
+present", the power will remain on, but no fix will be used.  If you
+install a GPS, be sure to enable or disable it.
 
 ## Technical notes:
 
